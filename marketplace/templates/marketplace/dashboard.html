@@ -1,0 +1,150 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Dashboard | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="dashboard-hero">
+        <div>
+            <span class="eyebrow">{{ profile.get_role_display }} Dashboard</span>
+            <h1>{{ profile.display_name }}</h1>
+            <p>{{ profile.level_name }} level, {{ profile.wallet_credits }} FixPoints, {{ profile.xp }} XP.</p>
+        </div>
+        {% if is_customer %}
+            <a class="btn btn-brand btn-lg" href="{% url 'job-create' %}">Post a Job</a>
+        {% endif %}
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-md-4">
+            <div class="metric-card">
+                <span>Wallet</span>
+                <strong>{{ profile.wallet_credits }}</strong>
+                <p>FixPoints available</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="metric-card">
+                <span>XP</span>
+                <strong>{{ profile.xp }}</strong>
+                <p>{{ profile.level_meta.progress }}% to the next tier</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="metric-card">
+                <span>Reputation</span>
+                <strong>{{ profile.average_rating|floatformat:1 }}</strong>
+                <p>Average rating</p>
+            </div>
+        </div>
+    </div>
+
+    {% if is_customer %}
+        <div class="row g-4 mt-1">
+            <div class="col-lg-7">
+                <div class="panel-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="mb-0">Your jobs</h2>
+                        <a href="{% url 'job-list' %}" class="btn btn-sm btn-outline-dark">View marketplace</a>
+                    </div>
+                    <div class="list-grid">
+                        {% for job in jobs %}
+                            <a class="listing-card" href="{{ job.get_absolute_url }}">
+                                <div class="listing-top">
+                                    <span class="badge text-bg-dark">{{ job.get_status_display }}</span>
+                                    <span class="mini-pill">{{ job.get_urgency_display }}</span>
+                                    {% if job.is_boosted %}
+                                        <span class="mini-pill">Boosted</span>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ job.title }}</h3>
+                                <p>{{ job.description|truncatewords:16 }}</p>
+                                <div class="meta-line">
+                                    <span>{{ job.display_location }}</span>
+                                    <strong>{{ job.credits_spent }} FixPoints</strong>
+                                </div>
+                            </a>
+                        {% empty %}
+                            <p class="text-muted mb-0">Your first job will appear here.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="panel-card">
+                    <h2>Recommended workers</h2>
+                    {% for worker in recommended_workers %}
+                        <div class="rank-row">
+                            <div>
+                                <strong>{{ worker.display_name }}</strong>
+                                <p>{{ worker.level_name }} / {{ worker.city|default:'Flexible' }}</p>
+                            </div>
+                            <span>{{ worker.average_rating|floatformat:1 }}/5</span>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted mb-0">Recommended workers will appear as more profiles are completed.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row g-4 mt-1">
+            <div class="col-lg-6">
+                <div class="panel-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="mb-0">Open jobs for you</h2>
+                        <a href="{% url 'job-list' %}" class="btn btn-sm btn-outline-dark">Browse all</a>
+                    </div>
+                    <div class="list-grid">
+                        {% for job in available_jobs %}
+                            <a class="listing-card" href="{{ job.get_absolute_url }}">
+                                <div class="listing-top">
+                                    <span class="badge text-bg-dark">{{ job.category }}</span>
+                                    <span class="mini-pill">{{ job.display_location }}</span>
+                                    {% if job.is_boosted %}
+                                        <span class="mini-pill">Boosted</span>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ job.title }}</h3>
+                                <p>{{ job.description|truncatewords:14 }}</p>
+                            </a>
+                        {% empty %}
+                            <p class="text-muted mb-0">More jobs will appear as customers post them.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel-card">
+                    <h2>Your applications</h2>
+                    {% for application in applications %}
+                        <div class="rank-row">
+                            <div>
+                                <strong>{{ application.job.title }}</strong>
+                                <p>{{ application.job.customer.display_name }} / {{ application.get_status_display }}</p>
+                            </div>
+                            <span>{{ application.match_score_snapshot }}%</span>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted mb-0">You haven't applied to any jobs yet.</p>
+                    {% endfor %}
+                </div>
+                <div class="panel-card mt-4">
+                    <h2>Job history</h2>
+                    {% for application in job_history %}
+                        <div class="rank-row">
+                            <div>
+                                <strong><a href="{{ application.job.get_absolute_url }}">{{ application.job.title }}</a></strong>
+                                <p>{{ application.job.get_status_display }} / {{ application.job.display_location }}</p>
+                            </div>
+                            <span>{{ application.job.created_at|date:'M d, Y' }}</span>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted mb-0">Accepted and completed jobs will build your history here.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

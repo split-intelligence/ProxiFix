@@ -1,0 +1,68 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Jobs | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+        <div>
+            <span class="eyebrow">Marketplace</span>
+            <h1>Open jobs</h1>
+        </div>
+        {% if profile and profile.role == 'customer' %}
+            <a class="btn btn-brand" href="{% url 'job-create' %}">Post a job</a>
+        {% endif %}
+    </div>
+
+    <form class="filter-bar mb-4" method="get">
+        <input class="form-control" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search by job title or description">
+        <input class="form-control" type="text" name="city" value="{{ request.GET.city }}" placeholder="City or area">
+        <select class="form-select" name="category">
+            <option value="">All categories</option>
+            {% for value, label in jobs.model.CATEGORY_CHOICES %}
+                <option value="{{ value }}" {% if request.GET.category == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <select class="form-select" name="urgency">
+            <option value="">Any urgency</option>
+            <option value="normal" {% if request.GET.urgency == 'normal' %}selected{% endif %}>Normal</option>
+            <option value="priority" {% if request.GET.urgency == 'priority' %}selected{% endif %}>Priority</option>
+            <option value="emergency" {% if request.GET.urgency == 'emergency' %}selected{% endif %}>Emergency</option>
+        </select>
+        <button class="btn btn-dark" type="submit">Apply filters</button>
+    </form>
+
+    <div class="row g-4">
+        {% for job in jobs %}
+            <div class="col-lg-6">
+                <div class="listing-card h-100">
+                    <div class="listing-top">
+                        <span class="badge text-bg-dark">{{ job.category }}</span>
+                        <span class="mini-pill">{{ job.get_urgency_display }}</span>
+                        {% if job.is_boosted %}
+                            <span class="mini-pill">Boosted</span>
+                        {% endif %}
+                    </div>
+                    <h3>{{ job.title }}</h3>
+                    <p>{{ job.description|truncatewords:22 }}</p>
+                    <div class="meta-line">
+                        <span>{{ job.display_location }}</span>
+                        <strong>&#8358;{{ job.budget_min }} - &#8358;{{ job.budget_max }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <small class="text-muted">Posted by {{ job.customer.display_name }}</small>
+                        <div class="d-flex gap-2">
+                            {% if profile and profile.role == 'worker' and job.pk in applied_ids %}
+                                <span class="mini-pill">Applied</span>
+                            {% endif %}
+                            <a class="btn btn-outline-dark btn-sm" href="{{ job.get_absolute_url }}">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No jobs match your filters.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

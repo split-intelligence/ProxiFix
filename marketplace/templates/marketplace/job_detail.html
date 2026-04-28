@@ -1,0 +1,140 @@
+{% extends 'marketplace/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ job.title }} | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="panel-card">
+                <div class="listing-top mb-3">
+                    <span class="badge text-bg-dark">{{ job.category }}</span>
+                    <span class="mini-pill">{{ job.get_status_display }}</span>
+                    <span class="mini-pill">{{ job.get_urgency_display }}</span>
+                    {% if job.is_boosted %}
+                        <span class="mini-pill">Boosted</span>
+                    {% endif %}
+                </div>
+                <h1>{{ job.title }}</h1>
+                <p class="lead">{{ job.description }}</p>
+                <div class="detail-grid">
+                    <div><strong>Budget</strong><span>&#8358;{{ job.budget_min }} - &#8358;{{ job.budget_max }}</span></div>
+                    <div><strong>Location</strong><span>{{ job.display_location }}</span></div>
+                    <div><strong>Customer</strong><span>{{ job.customer.display_name }}</span></div>
+                    <div><strong>Due date</strong><span>{{ job.due_date|default:'Flexible timing' }}</span></div>
+                </div>
+
+                {% if profile and profile.role == 'customer' and profile.id == job.customer_id %}
+                    <div class="action-row mt-4">
+                        {% if job.status == 'open' %}
+                            <form method="post" action="{% url 'job-boost' job.pk %}">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-dark" type="submit">Boost For 3 FixPoints</button>
+                            </form>
+                            <a class="btn btn-outline-dark" href="{% url 'job-status' job.pk 'in_progress' %}">Mark In Progress</a>
+                        {% endif %}
+                        {% if job.status != 'completed' %}
+                            <a class="btn btn-brand" href="{% url 'job-status' job.pk 'completed' %}">Mark Completed</a>
+                        {% endif %}
+                    </div>
+                {% elif profile and profile.role == 'worker' and not has_applied and job.status == 'open' %}
+                    <div class="mt-4">
+                        <a class="btn btn-brand" href="{% url 'job-apply' job.pk %}">Apply To This Job</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if can_view_contacts and job.selected_worker %}
+                <div class="panel-card mt-4">
+                    <h2>Shared contact details</h2>
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <strong>Customer</strong>
+                            <p>{{ job.customer.display_name }}</p>
+                            <p>{{ job.customer.user.email|default:'No email added' }}</p>
+                            <p>{{ job.customer.phone|default:'No phone added' }}</p>
+                            <p>{{ job.customer.city }}{% if job.customer.address %}, {{ job.customer.address }}{% endif %}</p>
+                        </div>
+                        <div class="contact-card">
+                            <strong>Worker</strong>
+                            <p>{{ job.selected_worker.display_name }}</p>
+                            <p>{{ job.selected_worker.user.email|default:'No email added' }}</p>
+                            <p>{{ job.selected_worker.phone|default:'No phone added' }}</p>
+                            <p>{{ job.selected_worker.city }}{% if job.selected_worker.address %}, {{ job.selected_worker.address }}{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if applications %}
+                <div class="panel-card mt-4">
+                    <h2>Applications</h2>
+                    {% for application in applications %}
+                        <div class="application-card">
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                <div>
+                                    <strong>{{ application.worker.display_name }}</strong>
+                                    <p>{{ application.pitch }}</p>
+                                </div>
+                                <span class="mini-pill">{{ application.match_score_snapshot }}%</span>
+                            </div>
+                            <div class="meta-line mt-2">
+                                <span>{{ application.estimated_days }} day{{ application.estimated_days|pluralize }}</span>
+                                <strong>&#8358;{{ application.proposed_price }}</strong>
+                            </div>
+                            {% if profile and profile.role == 'customer' and profile.id == job.customer_id and job.status == 'open' %}
+                                <a class="btn btn-outline-dark btn-sm mt-3" href="{% url 'application-accept' job.pk application.pk %}">Accept Worker</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if review_form %}
+                <div class="panel-card mt-4">
+                    <h2>Leave a review</h2>
+                    <form method="post" action="{% url 'job-review' job.pk %}">
+                        {% csrf_token %}
+                        {{ review_form|crispy }}
+                        <button class="btn btn-brand mt-2" type="submit">Publish Review</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-5">
+            <div class="panel-card">
+                <h2>Recommended workers</h2>
+                {% for recommendation in recommendations %}
+                    <div class="rank-row align-items-start">
+                        <div>
+                            <strong>{{ recommendation.worker.display_name }}</strong>
+                            <p>
+                                {{ recommendation.worker.level_name }}
+                                {% if recommendation.distance_km %}
+                                    / {{ recommendation.distance_km }} km away
+                                {% endif %}
+                            </p>
+                        </div>
+                        <span>{{ recommendation.score }}%</span>
+                    </div>
+                {% empty %}
+                    <p class="text-muted mb-0">Recommended workers will appear here once they join ProxiFix.</p>
+                {% endfor %}
+            </div>
+
+            {% if application_form %}
+                <div class="panel-card mt-4">
+                    <h2>Quick apply</h2>
+                    <p class="text-muted">Applying to this job costs 1 FixPoint.</p>
+                    <form method="post" action="{% url 'job-apply' job.pk %}">
+                        {% csrf_token %}
+                        {{ application_form|crispy }}
+                        <button class="btn btn-brand mt-2" type="submit">Send Proposal</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Leaderboard | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="section-heading">
+        <span class="eyebrow">Community leaderboard</span>
+        <h1>Worker leaderboard</h1>
+        <p class="mb-0">Ranked by XP, then by review quality and completed jobs.</p>
+    </div>
+    <div class="panel-card mt-4">
+        {% for worker in workers %}
+            <div class="leader-row">
+                <div class="leader-rank">#{{ forloop.counter }}</div>
+                <div class="leader-body">
+                    <strong>{{ worker.display_name }}</strong>
+                    <p>{{ worker.level_name }} · {{ worker.city|default:'Flexible location' }} · {{ worker.completed_jobs }} completed jobs</p>
+                </div>
+                <div class="leader-score">
+                    <span>{{ worker.xp }} XP</span>
+                    <small>{{ worker.average_rating|floatformat:1 }}/5</small>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted mb-0">No worker profiles are available yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

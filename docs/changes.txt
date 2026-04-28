@@ -1,0 +1,41 @@
+This file contains the changes to be made.
+
+instead of asking the users the Longitude and Latitude, use the city and address. 
+then when job is posted, using both the current Latitude, Longitude i.e. current location and optional location for the job.
+
+posting jobs should cost some fix-points.
+look at this as a guide.
+4.5 Credit System (FixPoints) 
+Concept: 
+Users perform actions using credits (FixPoints) 
+ 
+Actions: 
+●  Post Job → 2 credits 
+●  Bid Job → 1 credit 
+●  Boost Visibility → 2–3 credits 
+
+
+Free Credits: 
+●  New users → 50 credits 
+●  Bonus for: 
+○  First job completion 
+○  Referrals 
+
+
+when a job is accepted, the contact details of both worker and customer should be shared, so that the worker can contact the customer.
+the wallet fix points, shall allow top-up(s). 
+add worker job history to access the job details.
+do not increase the wallet/fix-points unless on top-up.
+also looking at LEVELING SYSTEM FULL DESIGN, ensure it is implemented.
+also work o the typology and style. 
+add a footer to the base.html
+
+----------------------------------------------------------------------------
+
+The FixPoints should be bought, use paystack, 
+Pricing Strategy 
+●  1 credit ≈ ₦10 
+●  Packages: 
+○  ₦500 → 50 credits 
+○  ₦1000 → 110 credits 
+○  ₦2000 → 250 credits 

@@ -1,0 +1,49 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Workers | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+        <div>
+            <span class="eyebrow">Directory</span>
+            <h1>Trusted workers</h1>
+        </div>
+    </div>
+    <form class="filter-bar mb-4" method="get">
+        <input class="form-control" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search by name or skill">
+        <input class="form-control" type="text" name="city" value="{{ request.GET.city }}" placeholder="City">
+        <button class="btn btn-dark" type="submit">Apply filters</button>
+    </form>
+    <div class="row g-4">
+        {% for worker in workers %}
+            <div class="col-md-6 col-xl-4">
+                <div class="worker-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="mini-pill">{{ worker.level_badge }}</span>
+                            <h3 class="mt-3">{{ worker.display_name }}</h3>
+                            <p>{{ worker.city|default:'Flexible location' }}</p>
+                        </div>
+                        <div class="score-chip">{{ worker.average_rating|floatformat:1 }}</div>
+                    </div>
+                    <p>{{ worker.bio|default:'Responsive professional ready for matching.'|truncatewords:16 }}</p>
+                    <div class="skill-row mb-3">
+                        {% for skill in worker.skill_list|slice:':4' %}
+                            <span>{{ skill }}</span>
+                        {% empty %}
+                            <span>General Services</span>
+                        {% endfor %}
+                    </div>
+                    <div class="meta-line">
+                        <span>{{ worker.completed_jobs }} completed jobs</span>
+                        <strong>{{ worker.xp }} XP</strong>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No workers match your filters.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

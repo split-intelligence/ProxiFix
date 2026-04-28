@@ -1,0 +1,23 @@
+{% extends 'marketplace/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Account | ProxiFix{% endblock %}
+
+{% block content %}
+<section class="container section-space">
+    <div class="row justify-content-center">
+        <div class="col-xl-8">
+            <div class="auth-card">
+                <span class="eyebrow">Welcome</span>
+                <h1>Join ProxiFix</h1>
+                <p>Create your city-based profile, then buy FixPoints from your wallet with Paystack whenever you are ready to post or bid.</p>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-brand btn-lg mt-3" type="submit">Get started</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

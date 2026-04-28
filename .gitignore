@@ -1,0 +1,57 @@
+# Virtual environment
+venv/
+env/
+proxi_env/
+
+# Django
+*.pyc
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+
+# Local settings
+settings_local.py
+
+# Database
+db.sqlite3
+
+# Media files
+media/
+
+# Collected static files (if applicable)
+staticfiles/
+
+# Logs
+*.log
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.swp
+
+.mypy_cache/
+__pycache__/
+.env

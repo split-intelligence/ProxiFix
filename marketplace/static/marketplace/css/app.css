@@ -1,0 +1,323 @@
+:root {
+    --bg: #f8f1e5;
+    --bg-deep: #14213d;
+    --surface: rgba(255, 255, 255, 0.82);
+    --surface-strong: #fffaf0;
+    --ink: #101828;
+    --muted: #596273;
+    --brand: #ef7d31;
+    --brand-dark: #d25f15;
+    --accent: #2a9d8f;
+    --line: rgba(16, 24, 40, 0.08);
+    --shadow: 0 24px 64px rgba(20, 33, 61, 0.12);
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(239, 125, 49, 0.2), transparent 28%),
+        radial-gradient(circle at top right, rgba(42, 157, 143, 0.16), transparent 22%),
+        linear-gradient(180deg, #fff9ef 0%, var(--bg) 100%);
+    color: var(--ink);
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    min-height: 100vh;
+}
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, .brand-text {
+    font-family: "Sora", "Segoe UI", sans-serif;
+}
+
+.site-header {
+    background: linear-gradient(135deg, #152238 0%, #243b67 100%);
+    box-shadow: 0 8px 28px rgba(20, 33, 61, 0.16);
+}
+
+.brand-logo {
+    height: 50px;
+    /* object-fit: contain; */
+    border-radius: 14px;
+    /* background: rgba(255, 255, 255, 0.92); */
+    padding: 6px;
+}
+
+.brand-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.btn-brand {
+    background: linear-gradient(135deg, var(--brand) 0%, #ff9b54 100%);
+    border: none;
+    color: #fff;
+    box-shadow: 0 16px 28px rgba(239, 125, 49, 0.24);
+}
+
+.btn-brand:hover {
+    background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+    color: #fff;
+}
+
+.section-space {
+    padding-top: 2rem;
+}
+
+.hero-wrap {
+    padding: 3rem 0 1rem;
+}
+
+.hero-card,
+.panel-card,
+.auth-card,
+.metric-card,
+.worker-card,
+.feature-card,
+.listing-card,
+.stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+}
+
+.hero-card {
+    padding: 3rem;
+}
+
+.hero-card h1,
+.dashboard-hero h1,
+.section-heading h1,
+.section-heading h2 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    margin-bottom: 1rem;
+}
+
+.hero-card p,
+.section-heading p,
+.auth-card p,
+.listing-card p,
+.worker-card p,
+.feature-card p {
+    color: var(--muted);
+    font-size: 1.02rem;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(42, 157, 143, 0.12);
+    color: #17655d;
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    padding: 0.45rem 0.8rem;
+}
+
+.stats-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.stat-card,
+.metric-card,
+.feature-card,
+.worker-card,
+.listing-card,
+.panel-card,
+.auth-card {
+    padding: 1.5rem;
+}
+
+.stat-card strong,
+.metric-card strong {
+    display: block;
+    font-size: 2rem;
+    font-family: "Sora", "Segoe UI", sans-serif;
+}
+
+.section-heading {
+    margin-bottom: 1.5rem;
+}
+
+.listing-top,
+.meta-line,
+.action-row,
+.rank-row,
+.leader-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.mini-pill,
+.score-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.42rem 0.8rem;
+    font-weight: 700;
+    background: rgba(20, 33, 61, 0.06);
+    color: var(--bg-deep);
+}
+
+.score-chip {
+    background: rgba(42, 157, 143, 0.12);
+}
+
+.skill-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.skill-row span {
+    background: rgba(20, 33, 61, 0.06);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.dashboard-hero {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    background: linear-gradient(135deg, rgba(20, 33, 61, 0.98) 0%, rgba(33, 53, 92, 0.95) 100%);
+    color: #fff;
+    border-radius: 30px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.dashboard-hero p,
+.dashboard-hero .eyebrow {
+    color: #fff;
+}
+
+.dashboard-hero .eyebrow {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.list-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.filter-bar {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.detail-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-top: 1.5rem;
+}
+
+.detail-grid strong {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+
+.application-card,
+.level-card,
+.leader-row {
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.application-card:first-child,
+.level-card:first-child,
+.leader-row:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.leader-rank {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    background: rgba(239, 125, 49, 0.12);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-family: "Sora", "Segoe UI", sans-serif;
+}
+
+.leader-body {
+    flex: 1;
+}
+
+.leader-score {
+    text-align: right;
+    font-weight: 700;
+}
+
+.contact-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.contact-card {
+    background: rgba(20, 33, 61, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem;
+}
+
+.contact-card p:last-child,
+.rank-row p:last-child {
+    margin-bottom: 0;
+}
+
+.stack-form .btn {
+    width: 100%;
+}
+
+.site-footer {
+    margin-top: auto;
+    background: #10203a;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    flex-wrap: wrap;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    .hero-card,
+    .dashboard-hero {
+        padding: 1.6rem;
+    }
+}
