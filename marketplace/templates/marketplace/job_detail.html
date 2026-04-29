@@ -25,7 +25,7 @@
                     <div><strong>Due date</strong><span>{{ job.due_date|default:'Flexible timing' }}</span></div>
                 </div>
 
-                {% if profile and profile.role == 'customer' and profile.id == job.customer_id %}
+                {% if is_job_owner %}
                     <div class="action-row mt-4">
                         {% if job.status == 'open' %}
                             <form method="post" action="{% url 'job-boost' job.pk %}">
@@ -67,7 +67,7 @@
                 </div>
             {% endif %}
 
-            {% if applications %}
+            {% if is_job_owner and applications %}
                 <div class="panel-card mt-4">
                     <h2>Applications</h2>
                     {% for application in applications %}
@@ -91,6 +91,25 @@
                 </div>
             {% endif %}
 
+            {% if worker_application %}
+                <div class="panel-card mt-4">
+                    <h2>Your proposal</h2>
+                    <div class="application-card">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <strong>{{ worker_application.get_status_display }}</strong>
+                                <p>{{ worker_application.pitch }}</p>
+                            </div>
+                            <span class="mini-pill">{{ worker_application.match_score_snapshot }}%</span>
+                        </div>
+                        <div class="meta-line mt-2">
+                            <span>{{ worker_application.estimated_days }} day{{ worker_application.estimated_days|pluralize }}</span>
+                            <strong>&#8358;{{ worker_application.proposed_price }}</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if review_form %}
                 <div class="panel-card mt-4">
                     <h2>Leave a review</h2>
@@ -103,25 +122,27 @@
             {% endif %}
         </div>
         <div class="col-lg-5">
-            <div class="panel-card">
-                <h2>Recommended workers</h2>
-                {% for recommendation in recommendations %}
-                    <div class="rank-row align-items-start">
-                        <div>
-                            <strong>{{ recommendation.worker.display_name }}</strong>
-                            <p>
-                                {{ recommendation.worker.level_name }}
-                                {% if recommendation.distance_km %}
-                                    / {{ recommendation.distance_km }} km away
-                                {% endif %}
-                            </p>
+            {% if is_job_owner %}
+                <div class="panel-card">
+                    <h2>Recommended workers</h2>
+                    {% for recommendation in recommendations %}
+                        <div class="rank-row align-items-start">
+                            <div>
+                                <strong>{{ recommendation.worker.display_name }}</strong>
+                                <p>
+                                    {{ recommendation.worker.level_name }}
+                                    {% if recommendation.distance_km %}
+                                        / {{ recommendation.distance_km }} km away
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <span>{{ recommendation.score }}%</span>
                         </div>
-                        <span>{{ recommendation.score }}%</span>
-                    </div>
-                {% empty %}
-                    <p class="text-muted mb-0">Recommended workers will appear here once they join ProxiFix.</p>
-                {% endfor %}
-            </div>
+                    {% empty %}
+                        <p class="text-muted mb-0">Recommended workers will appear here once they join ProxiFix.</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             {% if application_form %}
                 <div class="panel-card mt-4">

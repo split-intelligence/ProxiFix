@@ -77,6 +77,8 @@ class RegistrationForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    WORKER_ONLY_FIELDS = ('skills', 'hourly_rate', 'response_time_hours')
+
     class Meta:
         model = Profile
         fields = (
@@ -89,13 +91,18 @@ class ProfileForm(forms.ModelForm):
             'skills',
             'hourly_rate',
             'response_time_hours',
-            'is_verified',
         )
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 4}),
             'latitude': forms.HiddenInput(),
             'longitude': forms.HiddenInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.role != Profile.WORKER:
+            for field_name in self.WORKER_ONLY_FIELDS:
+                self.fields.pop(field_name, None)
 
     def save(self, commit=True):
         profile = super().save(commit=False)

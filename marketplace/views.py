@@ -61,7 +61,7 @@ def register(request):
     if request.method == 'POST' and form.is_valid():
         user = form.save()
         login(request, user)
-        messages.success(request, 'Your ProxiFix account is live. Buy FixPoints anytime from your wallet to start posting and bidding.')
+        messages.success(request, 'Your ProxiFix account is live. We added 50 welcome FixPoints to your wallet, and you can top up anytime.')
         return redirect('dashboard')
     return render(request, 'marketplace/register.html', {'form': form})
 
@@ -212,13 +212,17 @@ def job_detail(request, pk):
         pk=pk,
     )
     profile = get_profile(request.user) if request.user.is_authenticated else None
-    applications = job.applications.all()
-    recommendations = recommend_workers(job, limit=6)
+    is_job_owner = bool(profile and profile.role == Profile.CUSTOMER and profile.id == job.customer_id)
+    is_selected_worker = bool(profile and profile.role == Profile.WORKER and profile.id == job.selected_worker_id)
+    applications = job.applications.all() if is_job_owner else job.applications.none()
+    recommendations = recommend_workers(job, limit=6) if is_job_owner else []
     has_applied = False
+    worker_application = None
     application_form = None
 
     if profile and profile.role == Profile.WORKER:
-        has_applied = applications.filter(worker=profile).exists()
+        worker_application = job.applications.filter(worker=profile).select_related('worker__user').first()
+        has_applied = worker_application is not None
         if job.is_open and not has_applied and job.customer_id != profile.id:
             application_form = ApplicationForm()
 
@@ -235,7 +239,7 @@ def job_detail(request, pk):
         review_form = ReviewForm()
 
     if profile and job.selected_worker_id:
-        can_view_contacts = profile.id in {job.customer_id, job.selected_worker_id}
+        can_view_contacts = is_job_owner or is_selected_worker
 
     return render(
         request,
@@ -245,7 +249,9 @@ def job_detail(request, pk):
             'applications': applications,
             'recommendations': recommendations,
             'profile': profile,
+            'is_job_owner': is_job_owner,
             'has_applied': has_applied,
+            'worker_application': worker_application,
             'application_form': application_form,
             'review_form': review_form,
             'can_view_contacts': can_view_contacts,

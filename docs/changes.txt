@@ -30,6 +30,8 @@ also looking at LEVELING SYSTEM FULL DESIGN, ensure it is implemented.
 also work o the typology and style. 
 add a footer to the base.html
 
+every new users gets 50 free credits
+
 ----------------------------------------------------------------------------
 
 The FixPoints should be bought, use paystack, 

@@ -5,6 +5,8 @@ customer
 worker
     username = tester2
     password = Admin@12345
+    username = tester3
+    password = Admin@12345
 
 Super Admin
     username admin

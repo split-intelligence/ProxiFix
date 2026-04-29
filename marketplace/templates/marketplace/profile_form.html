@@ -9,8 +9,12 @@
         <div class="col-xl-8">
             <div class="auth-card">
                 <span class="eyebrow">Profile</span>
-                <h1>Make your profile stand out</h1>
-                <p>Skills, response time, city, address, and verification all affect how ProxiFix ranks and matches you.</p>
+                <h1>Keep your {{ profile.get_role_display|lower }} profile ready</h1>
+                {% if profile.role == 'worker' %}
+                    <p>Skills, response time, city, and pricing help ProxiFix match you with the right jobs.</p>
+                {% else %}
+                    <p>Keep your contact and location details current so workers can respond to your jobs smoothly.</p>
+                {% endif %}
                 <form method="post" novalidate>
                     {% csrf_token %}
                     {{ form|crispy }}

@@ -52,7 +52,10 @@
             <div class="container pt-4">
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="alert alert-{{ message.tags|default:'info' }} shadow-sm border-0">{{ message }}</div>
+                        <div class="alert {% if message.level_tag == 'error' %}alert-danger{% else %}alert-{{ message.level_tag|default:'info' }}{% endif %} alert-dismissible fade show shadow-sm border-0" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>

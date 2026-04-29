@@ -8,7 +8,7 @@ from django.db import transaction
 
 from .models import CreditTransaction, Job, Profile, WalletTopUp, XPEvent
 
-DEFAULT_SIGNUP_CREDITS = 0
+DEFAULT_SIGNUP_CREDITS = 50
 JOB_POST_CREDIT_COST = 2
 APPLICATION_CREDIT_COST = 1
 BOOST_VISIBILITY_CREDIT_COST = 3
@@ -184,6 +184,7 @@ def _paystack_headers():
     return {
         'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
         'Content-Type': 'application/json',
+        'User-Agent': "Split"
     }
 
 
@@ -199,12 +200,12 @@ def _paystack_request(url, payload=None, method='GET'):
         body = exc.read().decode('utf-8', errors='ignore')
         try:
             parsed = json.loads(body)
-            message = parsed.get('message') or 'Unable to reach Paystack right now.'
+            message = parsed.get('message', body)
         except json.JSONDecodeError:
-            message = 'Unable to reach Paystack right now.'
+            message = f'Paystack API error: {exc.code} {exc.reason}'
         raise ValueError(message) from exc
     except error.URLError as exc:
-        raise ValueError('Unable to connect to Paystack right now.') from exc
+        raise ValueError(message) from exc
 
 
 def initialize_paystack_topup(profile, package, callback_url):
