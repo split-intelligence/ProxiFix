@@ -1300,3 +1300,1464 @@ h1, h2, h3, h4, .brand-text {
         width: 100%;
     }
 }
+
+.page-home {
+    background:
+        radial-gradient(circle at top left, rgba(239, 125, 49, 0.12), transparent 20%),
+        linear-gradient(180deg, #eef2f5 0%, #f8fafc 100%);
+}
+
+.page-home .site-header-home {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 20;
+    background: transparent;
+    box-shadow: none;
+}
+
+.page-home .site-header-home::after {
+    display: none;
+}
+
+.page-home .site-header-inner {
+    padding-top: 1.4rem !important;
+    padding-bottom: 1.4rem !important;
+}
+
+.page-home .navbar {
+    align-items: center;
+}
+
+.page-home .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.95rem;
+}
+
+.page-home .brand-logo {
+    height: 44px;
+    padding: 4px;
+}
+
+.page-home .brand-text {
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.page-home .main-content {
+    padding-bottom: 0 !important;
+}
+
+.home-reference-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 7.5rem 0 0;
+    background:
+        linear-gradient(90deg, rgba(12, 18, 28, 0.9) 0%, rgba(12, 18, 28, 0.72) 40%, rgba(12, 18, 28, 0.84) 100%),
+        linear-gradient(135deg, #342518 0%, #1e1b18 40%, #302015 100%);
+    color: #fff;
+}
+
+.home-reference-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.home-reference-shell,
+.home-split-block,
+.home-cta-panel {
+    display: grid;
+    gap: 2rem;
+}
+
+.home-reference-shell {
+    position: relative;
+    z-index: 1;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    min-height: 640px;
+    padding-bottom: 3.25rem;
+}
+
+.home-reference-media {
+    position: relative;
+    align-self: end;
+}
+
+.home-reference-media-frame {
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+    max-width: 470px;
+    border-radius: 0;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+}
+
+.home-reference-media-frame::after,
+.home-tall-media::after,
+.home-split-media::after,
+.home-service-card::after,
+.home-faq-visual::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 56px 56px;
+    border-color: transparent transparent var(--brand) transparent;
+    z-index: 2;
+}
+
+.home-reference-media-frame img,
+.home-split-media img,
+.home-tall-media img,
+.home-proof-visual img,
+.home-faq-visual img,
+.home-service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.home-reference-badge,
+.home-corner-stat,
+.home-tall-badge,
+.home-proof-callout,
+.home-faq-badge {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    gap: 0.1rem;
+    padding: 1rem 1.1rem;
+    background: rgba(14, 21, 32, 0.88);
+    color: #fff;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+}
+
+.home-reference-badge {
+    left: -1rem;
+    bottom: 2rem;
+    min-width: 126px;
+}
+
+.home-reference-badge strong,
+.home-corner-stat strong,
+.home-tall-badge strong,
+.home-faq-badge strong {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+.home-reference-badge span,
+.home-corner-stat span,
+.home-tall-badge span,
+.home-proof-callout p,
+.home-faq-badge span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.74);
+    margin: 0;
+}
+
+.home-reference-copy {
+    padding: 1rem 0 1rem 1rem;
+}
+
+.home-kicker {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.home-reference-copy h1,
+.home-section-heading h2,
+.home-split-copy h2,
+.home-cta-copy h2 {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: clamp(2.3rem, 4vw, 4.1rem);
+    line-height: 1.02;
+    margin: 0 0 1rem;
+}
+
+.home-section-heading h2,
+.home-split-copy h2,
+.home-cta-copy h2 {
+    font-size: clamp(2rem, 3vw, 3.25rem);
+    color: #111827;
+}
+
+.home-reference-copy p,
+.home-section-heading p,
+.home-split-copy p,
+.home-feature-card p,
+.home-service-copy p,
+.home-proof-card p,
+.home-cta-copy p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.home-reference-copy p,
+.home-reference-contact small {
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.home-reference-actions,
+.home-reference-contact,
+.home-cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.home-reference-actions {
+    margin-top: 1.75rem;
+}
+
+.home-reference-contact {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.home-reference-contact > div {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 220px;
+}
+
+.home-reference-contact strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.home-reference-stats,
+.home-info-grid,
+.home-feature-grid,
+.home-service-grid,
+.home-worker-proof-grid,
+.home-cta-points,
+.home-cta-card-list,
+.home-proof-meta {
+    display: grid;
+    gap: 1rem;
+}
+
+.home-reference-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1.5rem;
+}
+
+.home-reference-stats article {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.home-reference-stats strong,
+.home-info-grid strong,
+.home-feature-card h3,
+.home-service-copy h3,
+.home-proof-card h3,
+.home-cta-card h3 {
+    font-family: "Sora", "Segoe UI", sans-serif;
+}
+
+.home-reference-stats strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+}
+
+.home-reference-stats span {
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.92rem;
+}
+
+.home-logo-strip {
+    background: #11161f;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.home-logo-strip-inner {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+    text-align: center;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 0.95rem;
+}
+
+.home-logo-strip-inner span {
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.home-logo-strip-inner span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    background: var(--brand);
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.home-section {
+    padding-top: 5.5rem;
+}
+
+.home-split-block {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+}
+
+.home-split-media,
+.home-tall-media,
+.home-proof-visual,
+.home-faq-visual {
+    position: relative;
+    overflow: hidden;
+    background: #dce3ea;
+}
+
+.home-split-media {
+    min-height: 520px;
+}
+
+.home-corner-stat {
+    left: 0;
+    bottom: 0;
+    background: rgba(35, 57, 94, 0.92);
+}
+
+.home-split-copy {
+    padding-left: 1rem;
+}
+
+.home-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 1.5rem 0 2rem;
+}
+
+.home-info-grid p,
+.home-feature-card p,
+.home-proof-card p {
+    color: #556070;
+}
+
+.home-section-heading {
+    margin-bottom: 1.75rem;
+}
+
+.home-section-heading-wide {
+    max-width: 54rem;
+}
+
+.home-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-feature-card,
+.home-proof-card,
+.home-cta-card,
+.home-faq-accordion .accordion-item {
+    border: 1px solid #d6dde6;
+    background: #fff;
+    box-shadow: 0 18px 40px rgba(17, 24, 39, 0.06);
+}
+
+.home-feature-card {
+    padding: 1.15rem;
+}
+
+.home-feature-index,
+.home-service-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    margin-bottom: 0.85rem;
+    background: #1f3558;
+    color: #fff;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+}
+
+.home-feature-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.08rem;
+}
+
+.home-tall-media {
+    min-height: 100%;
+    height: 100%;
+}
+
+.home-tall-badge {
+    right: 0;
+    bottom: 0;
+    min-width: 140px;
+    background: rgba(239, 125, 49, 0.95);
+}
+
+.home-service-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-service-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 280px;
+    background: #111827;
+    color: #fff;
+}
+
+.home-service-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(17, 24, 39, 0.1) 0%, rgba(17, 24, 39, 0.92) 100%);
+    z-index: 1;
+}
+
+.home-service-copy {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 2;
+    padding: 1.2rem;
+}
+
+.home-service-copy h3 {
+    margin: 0 0 0.45rem;
+    font-size: 1.15rem;
+}
+
+.home-service-copy p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.93rem;
+    line-height: 1.6;
+}
+
+.home-worker-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-proof-card {
+    padding: 1.25rem;
+}
+
+.home-proof-card-empty {
+    grid-column: 1 / -1;
+}
+
+.home-proof-top {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.home-proof-top h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+}
+
+.home-proof-top p {
+    color: #667085;
+    margin: 0;
+}
+
+.home-proof-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 1rem;
+}
+
+.home-proof-meta span,
+.home-cta-points span,
+.home-cta-card-list div {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.home-proof-meta span {
+    padding: 0.75rem 0.85rem;
+    background: #f4f7fa;
+    color: #344054;
+    font-size: 0.9rem;
+}
+
+.home-proof-visual,
+.home-faq-visual {
+    min-height: 100%;
+}
+
+.home-proof-callout {
+    left: 1.2rem;
+    right: 1.2rem;
+    bottom: 1.2rem;
+}
+
+.home-proof-callout strong {
+    font-size: 1.1rem;
+}
+
+.home-cta-panel {
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    padding: 2rem;
+    background:
+        linear-gradient(135deg, rgba(14, 20, 30, 0.96) 0%, rgba(28, 46, 78, 0.95) 100%);
+    color: #fff;
+    box-shadow: 0 24px 52px rgba(17, 24, 39, 0.16);
+}
+
+.home-cta-copy h2,
+.home-cta-copy p {
+    color: #fff;
+}
+
+.home-cta-points {
+    margin-top: 1.4rem;
+}
+
+.home-cta-points span::before,
+.home-cta-card-list strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    background: rgba(239, 125, 49, 0.16);
+    color: var(--brand);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.home-cta-points span::before {
+    content: "+";
+}
+
+.home-cta-card {
+    padding: 1.5rem;
+    color: #111827;
+}
+
+.home-cta-card-kicker {
+    display: inline-flex;
+    margin-bottom: 0.65rem;
+    padding: 0.35rem 0.65rem;
+    background: #f4f7fa;
+    color: #344054;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-cta-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.45rem;
+}
+
+.home-cta-card-list {
+    margin-bottom: 1.25rem;
+}
+
+.home-cta-card-list div {
+    color: #556070;
+}
+
+.home-cta-actions {
+    margin-top: 1.25rem;
+}
+
+.home-faq-section {
+    padding-bottom: 5rem !important;
+}
+
+.home-faq-accordion {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.home-faq-accordion .accordion-item {
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.home-faq-accordion .accordion-button {
+    background: #fff;
+    color: #111827;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 1rem;
+    box-shadow: none;
+}
+
+.home-faq-accordion .accordion-button:not(.collapsed) {
+    background: #111827;
+    color: #fff;
+}
+
+.home-faq-accordion .accordion-body {
+    color: #556070;
+    line-height: 1.75;
+}
+
+.home-faq-visual {
+    min-height: 640px;
+}
+
+.home-faq-badge {
+    right: 0;
+    bottom: 0;
+    max-width: 230px;
+    background: rgba(31, 53, 88, 0.96);
+}
+
+.page-home .site-footer {
+    background:
+        radial-gradient(circle at top right, rgba(239, 125, 49, 0.14), transparent 22%),
+        linear-gradient(180deg, #10151d 0%, #0a0f16 100%);
+}
+
+.page-home .footer-inner {
+    padding: 2rem 0;
+}
+
+@media (max-width: 1199px) {
+    .home-reference-shell,
+    .home-split-block,
+    .home-cta-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .home-reference-copy,
+    .home-split-copy {
+        padding-left: 0;
+    }
+
+    .home-reference-media-frame {
+        max-width: 100%;
+    }
+
+    .home-proof-meta,
+    .home-reference-stats,
+    .home-info-grid,
+    .home-feature-grid,
+    .home-worker-proof-grid,
+    .home-service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991px) {
+    .page-home .site-header-home {
+        position: relative;
+        background: linear-gradient(135deg, #1b2a45 0%, #243b67 100%);
+    }
+
+    .home-reference-hero {
+        padding-top: 2rem;
+    }
+
+    .home-reference-shell {
+        min-height: auto;
+    }
+
+    .home-reference-media {
+        order: 2;
+    }
+
+    .home-reference-copy {
+        order: 1;
+    }
+
+    .home-reference-media-frame,
+    .home-split-media,
+    .home-faq-visual {
+        min-height: 420px;
+    }
+
+    .home-tall-media {
+        min-height: 520px;
+    }
+
+    .home-reference-badge {
+        left: 1rem;
+        bottom: 1rem;
+    }
+
+    .home-logo-strip-inner {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .home-section {
+        padding-top: 4rem;
+    }
+
+    .home-reference-shell {
+        padding-bottom: 2.5rem;
+    }
+
+    .home-reference-copy h1,
+    .home-section-heading h2,
+    .home-split-copy h2,
+    .home-cta-copy h2 {
+        font-size: 2rem;
+    }
+
+    .home-reference-media-frame,
+    .home-split-media,
+    .home-tall-media,
+    .home-faq-visual {
+        min-height: 320px;
+    }
+
+    .home-reference-stats,
+    .home-info-grid,
+    .home-feature-grid,
+    .home-service-grid,
+    .home-worker-proof-grid,
+    .home-proof-meta,
+    .home-logo-strip-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .home-cta-panel {
+        padding: 1.4rem;
+    }
+
+    .home-proof-callout {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    .home-reference-badge,
+    .home-corner-stat,
+    .home-tall-badge,
+    .home-faq-badge {
+        position: static;
+    }
+
+    .home-reference-media,
+    .home-split-media,
+    .home-tall-media,
+    .home-proof-visual,
+    .home-faq-visual {
+        display: grid;
+        gap: 1rem;
+    }
+}
+
+.page-marketing {
+    background:
+        radial-gradient(circle at top left, rgba(239, 125, 49, 0.1), transparent 18%),
+        linear-gradient(180deg, #eff3f7 0%, #f8fafc 100%);
+}
+
+.page-marketing .site-header-marketing {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 20;
+    background: transparent;
+    box-shadow: none;
+}
+
+.page-marketing .site-header-marketing::after {
+    display: none;
+}
+
+.page-marketing .site-header-inner {
+    padding-top: 1.35rem !important;
+    padding-bottom: 1.35rem !important;
+}
+
+.page-marketing .brand-text {
+    color: #fff;
+}
+
+.page-marketing .brand-logo {
+    height: 44px;
+    padding: 4px;
+}
+
+.page-marketing .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.page-marketing .main-content {
+    padding-bottom: 0 !important;
+}
+
+.marketing-page-hero {
+    position: relative;
+    padding: 7.25rem 0 3.4rem;
+    color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.marketing-page-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.marketing-page-hero-copy,
+.marketing-banner-cta,
+.marketing-split-section,
+.marketing-cta-split,
+.marketing-faq-grid {
+    position: relative;
+    z-index: 1;
+}
+
+.marketing-page-hero-copy {
+    max-width: 34rem;
+}
+
+.marketing-page-kicker {
+    display: inline-flex;
+    margin-bottom: 0.9rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.marketing-page-hero-copy h1,
+.marketing-section-heading h2,
+.marketing-copy-card h2,
+.marketing-cta-dark h2,
+.marketing-banner-cta h2 {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    line-height: 1.04;
+}
+
+.marketing-page-hero-copy h1 {
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    margin: 0 0 1rem;
+}
+
+.marketing-page-breadcrumbs {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.marketing-page-breadcrumbs a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.marketing-page-section {
+    padding-top: 5.25rem;
+}
+
+.marketing-split-section,
+.marketing-cta-split,
+.marketing-faq-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.marketing-split-section {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
+}
+
+.marketing-media-card,
+.marketing-tall-media,
+.marketing-support-visual,
+.marketing-side-photo {
+    position: relative;
+    overflow: hidden;
+    background: #d7dee7;
+    box-shadow: 0 24px 52px rgba(17, 24, 39, 0.1);
+}
+
+.marketing-media-card::after,
+.marketing-tall-media::after,
+.marketing-support-visual::after,
+.marketing-side-photo::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 64px 64px;
+    border-color: transparent transparent var(--brand) transparent;
+    z-index: 2;
+}
+
+.marketing-media-card img,
+.marketing-tall-media img,
+.marketing-support-visual img,
+.marketing-side-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.marketing-media-card-large {
+    min-height: 560px;
+}
+
+.marketing-copy-card p,
+.marketing-section-heading p,
+.marketing-value-card p,
+.marketing-proof-card p,
+.marketing-guidance-card p,
+.marketing-action-card p,
+.marketing-cta-dark p,
+.marketing-banner-cta p {
+    color: #556070;
+    line-height: 1.75;
+}
+
+.marketing-copy-card p + p {
+    margin-top: 1rem;
+}
+
+.marketing-inline-grid,
+.marketing-value-grid,
+.marketing-proof-grid,
+.marketing-guidance-grid,
+.marketing-action-points,
+.marketing-action-button-stack,
+.marketing-feature-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.marketing-inline-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 1.5rem 0 2rem;
+}
+
+.marketing-inline-grid strong,
+.marketing-value-card h3,
+.marketing-price-card h3,
+.marketing-guidance-card h3,
+.marketing-proof-card h3,
+.marketing-action-card h3 {
+    font-family: "Sora", "Segoe UI", sans-serif;
+}
+
+.marketing-stat-badge,
+.marketing-corner-callout,
+.marketing-support-badge {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem 1.15rem;
+    background: rgba(25, 44, 76, 0.94);
+    color: #fff;
+    box-shadow: 0 16px 34px rgba(17, 24, 39, 0.2);
+}
+
+.marketing-stat-badge {
+    left: 0;
+    bottom: 0;
+}
+
+.marketing-corner-callout,
+.marketing-support-badge {
+    right: 0;
+    bottom: 0;
+}
+
+.marketing-stat-badge strong,
+.marketing-corner-callout strong,
+.marketing-support-badge strong {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 2.15rem;
+    line-height: 1;
+}
+
+.marketing-stat-badge span,
+.marketing-corner-callout span,
+.marketing-support-badge span {
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.92rem;
+}
+
+.marketing-service-strip {
+    margin-top: 2.75rem;
+    background: #0f141d;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.marketing-service-strip-inner {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+    text-align: center;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 0.92rem;
+}
+
+.marketing-service-strip-inner span {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.marketing-service-strip-inner span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--brand);
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.marketing-section-heading {
+    margin-bottom: 1.75rem;
+}
+
+.marketing-section-heading h2,
+.marketing-copy-card h2,
+.marketing-cta-dark h2,
+.marketing-banner-cta h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 3vw, 3.2rem);
+    color: #101828;
+}
+
+.marketing-section-heading-center {
+    max-width: 52rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.marketing-value-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.marketing-value-card,
+.marketing-proof-card,
+.marketing-guidance-card,
+.marketing-price-card,
+.marketing-action-card,
+.marketing-accordion .accordion-item {
+    background: #fff;
+    border: 1px solid #d7dee7;
+    box-shadow: 0 18px 42px rgba(17, 24, 39, 0.06);
+}
+
+.marketing-value-card {
+    padding: 1.15rem;
+    background: #101820;
+    border-color: #101820;
+    color: #fff;
+}
+
+.marketing-value-card p {
+    color: rgba(255, 255, 255, 0.76);
+    margin: 0;
+}
+
+.marketing-value-index,
+.marketing-price-kicker,
+.marketing-action-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    margin-bottom: 0.8rem;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.marketing-value-index {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+.marketing-tall-media {
+    min-height: 100%;
+}
+
+.marketing-price-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.marketing-price-card {
+    padding: 1.4rem;
+}
+
+.marketing-price-card-featured {
+    background: #1f3558;
+    border-color: #1f3558;
+    color: #fff;
+    box-shadow: 0 24px 52px rgba(17, 24, 39, 0.16);
+}
+
+.marketing-price-kicker,
+.marketing-action-kicker {
+    min-width: auto;
+    height: auto;
+    margin-bottom: 0.65rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.marketing-price-kicker {
+    background: #f3f6fa;
+    color: #344054;
+}
+
+.marketing-price-card-featured .marketing-price-kicker {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+.marketing-price-card h3 {
+    margin: 0 0 0.45rem;
+    font-size: 1.28rem;
+}
+
+.marketing-price-card p {
+    margin: 0;
+    line-height: 1.7;
+    color: #556070;
+}
+
+.marketing-price-card-featured p,
+.marketing-price-card-featured .marketing-price-amount span,
+.marketing-price-card-featured .marketing-feature-list li {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.marketing-price-amount {
+    margin: 1.25rem 0;
+}
+
+.marketing-price-amount strong {
+    display: block;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: clamp(2.1rem, 3vw, 3rem);
+    line-height: 1;
+}
+
+.marketing-price-amount span {
+    color: #667085;
+    font-size: 0.95rem;
+}
+
+.marketing-feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.4rem;
+}
+
+.marketing-feature-list li {
+    position: relative;
+    padding-left: 1.1rem;
+    color: #344054;
+}
+
+.marketing-feature-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 7px;
+    height: 7px;
+    background: var(--brand);
+    transform: rotate(45deg);
+}
+
+.marketing-guidance-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.marketing-guidance-card,
+.marketing-proof-card {
+    padding: 1.25rem;
+}
+
+.marketing-guidance-card h3,
+.marketing-proof-card h3 {
+    margin: 0 0 0.55rem;
+    font-size: 1.08rem;
+}
+
+.marketing-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.marketing-proof-card span {
+    display: inline-flex;
+    margin-top: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    background: #f4f7fa;
+    color: #344054;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.marketing-side-photo {
+    min-height: 100%;
+}
+
+.marketing-cta-split {
+    grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+}
+
+.marketing-cta-dark,
+.marketing-banner-cta {
+    background:
+        linear-gradient(135deg, rgba(14, 20, 30, 0.97) 0%, rgba(29, 46, 78, 0.95) 100%);
+    color: #fff;
+}
+
+.marketing-cta-dark {
+    padding: 2rem;
+    box-shadow: 0 24px 52px rgba(17, 24, 39, 0.14);
+}
+
+.marketing-cta-dark h2,
+.marketing-cta-dark p,
+.marketing-banner-cta h2,
+.marketing-banner-cta p {
+    color: #fff;
+}
+
+.marketing-action-points {
+    margin-top: 1.5rem;
+}
+
+.marketing-action-points div {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.marketing-action-points strong {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 1rem;
+}
+
+.marketing-action-points span {
+    color: rgba(255, 255, 255, 0.76);
+    line-height: 1.65;
+}
+
+.marketing-action-card {
+    padding: 1.5rem;
+}
+
+.marketing-action-kicker {
+    background: #f3f6fa;
+    color: #344054;
+}
+
+.marketing-action-card h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.4rem;
+}
+
+.marketing-action-button-stack .btn {
+    width: 100%;
+}
+
+.marketing-faq-grid {
+    grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+    align-items: start;
+}
+
+.marketing-accordion {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.marketing-accordion .accordion-item {
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.marketing-accordion .accordion-button {
+    background: #fff;
+    color: #101828;
+    font-family: "Sora", "Segoe UI", sans-serif;
+    font-size: 1rem;
+    box-shadow: none;
+}
+
+.marketing-accordion .accordion-button:not(.collapsed) {
+    background: #101820;
+    color: #fff;
+}
+
+.marketing-accordion .accordion-body {
+    color: #556070;
+    line-height: 1.75;
+}
+
+.marketing-support-visual {
+    min-height: 100%;
+}
+
+.marketing-banner-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 24px 52px rgba(17, 24, 39, 0.14);
+}
+
+.marketing-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.page-marketing .site-footer {
+    background:
+        radial-gradient(circle at top right, rgba(239, 125, 49, 0.14), transparent 22%),
+        linear-gradient(180deg, #10151d 0%, #0a0f16 100%);
+}
+
+.page-marketing .footer-inner {
+    padding: 2rem 0;
+}
+
+@media (max-width: 1199px) {
+    .marketing-split-section,
+    .marketing-cta-split,
+    .marketing-faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .marketing-price-grid,
+    .marketing-guidance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991px) {
+    .page-marketing .site-header-marketing {
+        position: relative;
+        background: linear-gradient(135deg, #1b2a45 0%, #243b67 100%);
+    }
+
+    .marketing-page-hero {
+        padding-top: 2.25rem;
+    }
+
+    .marketing-service-strip-inner,
+    .marketing-inline-grid,
+    .marketing-value-grid,
+    .marketing-proof-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .marketing-media-card-large,
+    .marketing-support-visual {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 767px) {
+    .marketing-page-section {
+        padding-top: 4rem;
+    }
+
+    .marketing-page-hero-copy h1,
+    .marketing-section-heading h2,
+    .marketing-copy-card h2,
+    .marketing-cta-dark h2,
+    .marketing-banner-cta h2 {
+        font-size: 2rem;
+    }
+
+    .marketing-media-card-large,
+    .marketing-tall-media,
+    .marketing-support-visual,
+    .marketing-side-photo {
+        min-height: 320px;
+    }
+
+    .marketing-service-strip-inner,
+    .marketing-inline-grid,
+    .marketing-value-grid,
+    .marketing-price-grid,
+    .marketing-guidance-grid,
+    .marketing-proof-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .marketing-stat-badge,
+    .marketing-corner-callout,
+    .marketing-support-badge {
+        position: static;
+    }
+
+    .marketing-media-card,
+    .marketing-tall-media,
+    .marketing-support-visual {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .marketing-cta-dark,
+    .marketing-banner-cta,
+    .marketing-action-card {
+        padding: 1.4rem;
+    }
+
+    .marketing-banner-cta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

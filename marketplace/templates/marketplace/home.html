@@ -2,235 +2,338 @@
 {% load static %}
 
 {% block title %}ProxiFix | Home{% endblock %}
+{% block body_class %}page-home{% endblock %}
+{% block header_class %}site-header-home{% endblock %}
 
 {% block content %}
-<section class="home-hero hero-wrap">
-    <div class="home-hero-backdrop" aria-hidden="true">
-        <span class="hero-blob hero-blob-one"></span>
-        <span class="hero-blob hero-blob-two"></span>
-        <span class="hero-grid"></span>
-    </div>
+<section class="home-reference-hero">
     <div class="container">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-6">
-                <div class="hero-card home-hero-copy">
-                    <span class="eyebrow">Home repair and improvement</span>
-                    <h1>Need something fixed at home? Find a trusted local worker.</h1>
-                    <p>From plumbing and electrical work to carpentry, painting, and installations, ProxiFix helps you find skilled workers for the jobs that matter at home.</p>
-                    <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Get started</a>
-                        <a class="btn btn-light btn-lg" href="{% url 'worker-directory' %}">Find workers</a>
-                    </div>
-                    <div class="hero-chip-row">
-                        <span class="hero-chip"><strong>{{ featured_workers|length }}</strong> trusted workers</span>
-                        <span class="hero-chip"><strong>Big or small</strong> home jobs</span>
-                        <span class="hero-chip"><strong>Wallet</strong> top-up available</span>
-                    </div>
-                    <div class="hero-mini-stats">
-                        <div class="hero-mini-stat">
-                            <strong>2 FixPoints</strong>
-                            <span>Post a job request</span>
-                        </div>
-                        <div class="hero-mini-stat">
-                            <strong>1 FixPoint</strong>
-                            <span>Send a proposal</span>
-                        </div>
-                        <div class="hero-mini-stat">
-                            <strong>Repair and install</strong>
-                            <span>Plumbing, electrical, carpentry, and more</span>
-                        </div>
-                    </div>
+        <div class="home-reference-shell">
+            <div class="home-reference-media">
+                <div class="home-reference-media-frame">
+                    <img src="{% static 'marketplace/images/black-handyman-workshop.jpg' %}" alt="Craftsman working with a drill in a workshop">
+                </div>
+                <div class="home-reference-badge">
+                    <strong>{{ featured_workers|length }}</strong>
+                    <span>featured pros</span>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="home-photo-collage" aria-label="Handymen at work">
-                    <figure class="photo-card photo-card-main">
-                        <img src="{% static 'marketplace/images/black-handyman-workshop.jpg' %}" alt="Black craftsman drilling wood in a workshop">
-                    </figure>
-                    <figure class="photo-card photo-card-side">
-                        <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Black tradeswoman carrying a toolbox on site">
-                    </figure>
-                    <figure class="photo-card photo-card-side photo-card-tall">
-                        <img src="{% static 'marketplace/images/black-female-carpenter.jpg' %}" alt="Black female carpenter adjusting ear protection inside a workshop">
-                    </figure>
-                    <div class="photo-floating-badge">Trusted local workers</div>
-                    <div class="photo-floating-chip photo-chip-one">Plumbing Services</div>
-                    <div class="photo-floating-chip photo-chip-two">Workshop skill</div>
-                    <div class="photo-floating-chip photo-chip-three">Fixture and Hardware Installation</div>
+            <div class="home-reference-copy">
+                <span class="home-kicker">Trusted repairs. Local workers. Clearer follow-through.</span>
+                <h1>Precision repairs. Trusted local workers. From homes to cars, engines, and more.</h1>
+                <p>ProxiFix helps people post repair jobs, compare skilled workers, and move from problem to completion with better visibility, faster replies, and flexible FixPoints across property, vehicle, engine, and general repair work.</p>
+                <div class="home-reference-actions">
+                    {% if request.user.is_authenticated %}
+                        <a class="btn btn-brand btn-lg" href="{% url 'job-create' %}">Post a job</a>
+                    {% else %}
+                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Start with ProxiFix</a>
+                    {% endif %}
+                    <a class="btn btn-outline-light btn-lg" href="{% url 'worker-directory' %}">Find workers</a>
+                </div>
+                <div class="home-reference-contact">
+                    <div>
+                        <small>Best for</small>
+                        <strong>Repairs, maintenance, diagnostics, installations</strong>
+                    </div>
+                    <div>
+                        <small>Marketplace flow</small>
+                        <strong>Post, compare, hire, track</strong>
+                    </div>
+                </div>
+                <div class="home-reference-stats">
+                    <article>
+                        <strong>2 FixPoints</strong>
+                        <span>to post a job request</span>
+                    </article>
+                    <article>
+                        <strong>1 FixPoint</strong>
+                        <span>to send a proposal</span>
+                    </article>
+                    <article>
+                        <strong>{{ featured_workers|length }}</strong>
+                        <span>featured workers on this page</span>
+                    </article>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="container section-space">
-    <div class="home-band">
-        <div class="section-heading home-band-copy">
-            <span class="eyebrow">Our services</span>
-            <h2>The kind of help people need around the house.</h2>
-            <p>Book local workers for repairs, installations, maintenance, and everyday fixes.</p>
-        </div>
-        <div class="service-tile-grid">
-            {% for value, label in open_jobs.model.CATEGORY_CHOICES|slice:":6" %}
-                <div class="service-tile">
-                    <span class="service-tile-code">0{{ forloop.counter }}</span>
-                    <strong>{{ label }}</strong>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
- </section>
-
-<section class="container section-space">
-    <div class="flow-strip">
-        <div class="flow-step">
-            <span class="flow-number">01</span>
-            <h3>Tell us the job</h3>
-            <p>Tell us what you need, where you are, and how urgent it is.</p>
-        </div>
-        <div class="flow-step">
-            <span class="flow-number">02</span>
-            <h3>Choose your worker</h3>
-            <p>Check profiles, compare workers, and go with the one that feels right.</p>
-        </div>
-        <div class="flow-step">
-            <span class="flow-number">03</span>
-            <h3>Get it done</h3>
-            <p>Keep things moving, follow the job, and build trust through real work.</p>
+<section class="home-logo-strip">
+    <div class="container">
+        <div class="home-logo-strip-inner">
+            <span>Property Repairs</span>
+            <span>Vehicle Repairs</span>
+            <span>Engine Work</span>
+            <span>Electrical Fixes</span>
+            <span>Appliance Repair</span>
+            <span>General Maintenance</span>
         </div>
     </div>
 </section>
 
-<section class="container section-space">
+<section class="container home-section">
+    <div class="home-split-block">
+        <div class="home-split-media">
+            <img src="{% static 'marketplace/images/black-female-carpenter.jpg' %}" alt="Female craftswoman holding a drill and smiling">
+            <div class="home-corner-stat">
+                <strong>7</strong>
+                <span>service categories currently listed</span>
+            </div>
+        </div>
+        <div class="home-split-copy">
+            <span class="eyebrow">About us</span>
+            <h2>Engineering reliability into everyday repairs of every kind.</h2>
+            <p>From leaking taps and electrical callouts to vehicle faults, engine issues, and practical maintenance jobs, ProxiFix gives people a cleaner way to find help close by. The platform makes it easier to explain the problem, review workers, compare responses, and keep momentum once work begins.</p>
+            <div class="home-info-grid">
+                <div>
+                    <strong>Location-aware matching</strong>
+                    <p>Profiles and job listings can use city and coordinate data to keep discovery local and practical for both on-site visits and mobile repair work.</p>
+                </div>
+                <div>
+                    <strong>Transparent worker growth</strong>
+                    <p>FixPoints, XP, and level badges make worker activity and consistency easier to understand at a glance across many repair specialties.</p>
+                </div>
+            </div>
+            <a class="btn btn-brand" href="{% url 'job-list' %}">Browse open jobs</a>
+        </div>
+    </div>
+</section>
+
+<section class="container home-section">
     <div class="row g-4 align-items-stretch">
+        <div class="col-lg-6">
+            <div class="home-section-heading">
+                <span class="eyebrow">Why ProxiFix</span>
+                <h2>The expert choice for smoother repairs across property, vehicles, and equipment.</h2>
+                <p>A marketplace is only useful when it reduces stress. ProxiFix is designed to help customers move quickly, compare workers with more confidence, and keep service activity visible from first request to completion whether the issue is at home, in a car, or inside an engine.</p>
+            </div>
+            <div class="home-feature-grid">
+                <article class="home-feature-card">
+                    <span class="home-feature-index">01</span>
+                    <h3>Structured job posting</h3>
+                    <p>Customers can describe scope, urgency, location, and budget without messy back-and-forth.</p>
+                </article>
+                <article class="home-feature-card">
+                    <span class="home-feature-index">02</span>
+                    <h3>Streamlined worker discovery</h3>
+                    <p>Browse profiles, skill tags, response times, and completed work before making a choice.</p>
+                </article>
+                <article class="home-feature-card">
+                    <span class="home-feature-index">03</span>
+                    <h3>Visible trust signals</h3>
+                    <p>Ratings, XP, completed jobs, and badges help strong workers stand out naturally.</p>
+                </article>
+                <article class="home-feature-card">
+                    <span class="home-feature-index">04</span>
+                    <h3>Practical platform economics</h3>
+                    <p>FixPoints keep posting, applying, and boosting simple without overcomplicating the flow.</p>
+                </article>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="home-tall-media">
+                <img src="{% static 'marketplace/images/black-handyman-install.jpg' %}" alt="Technician installing a fixture on an interior wall">
+                <div class="home-tall-badge">
+                    <strong>6+</strong>
+                    <span>core service lanes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container home-section">
+    <div class="home-section-heading home-section-heading-wide">
+        <span class="eyebrow">Our services</span>
+        <h2>Urgent fixes, ongoing maintenance, and specialist repair work in one place.</h2>
+        <p>These are some of the repair and maintenance tracks people can explore on ProxiFix, with room for broader requests including vehicle, engine, and general technical work.</p>
+    </div>
+    <div class="home-service-grid">
+        {% for value, label in open_jobs.model.CATEGORY_CHOICES|slice:":6" %}
+            <article class="home-service-card">
+                <img
+                    src="{% if forloop.counter == 1 %}{% static 'marketplace/images/handyman-plumber.jpg' %}{% elif forloop.counter == 2 %}{% static 'marketplace/images/handyman-electrician.jpg' %}{% elif forloop.counter == 3 %}{% static 'marketplace/images/black-handyman-install.jpg' %}{% elif forloop.counter == 4 %}{% static 'marketplace/images/black-handyman-smile.jpg' %}{% elif forloop.counter == 5 %}{% static 'marketplace/images/black-handyman-workshop.jpg' %}{% else %}{% static 'marketplace/images/handyman-drill.jpg' %}{% endif %}"
+                    alt="{{ label }} service work"
+                >
+                <div class="home-service-overlay"></div>
+                <div class="home-service-copy">
+                    <span class="home-service-index">0{{ forloop.counter }}</span>
+                    <h3>{{ label }}</h3>
+                    <p>
+                        {% if label == 'Plumbing' %}
+                            Leak repairs, fittings, blocked lines, and other pipework issues around the home.
+                        {% elif label == 'Electrical' %}
+                            Safer help for switches, fittings, socket issues, and routine home electrical jobs.
+                        {% elif label == 'Cleaning' %}
+                            Reliable home cleaning support for move-ins, resets, and recurring upkeep needs.
+                        {% elif label == 'Painting' %}
+                            Interior refresh work, touch-ups, and finishing improvements that lift the space.
+                        {% elif label == 'Carpentry' %}
+                            Furniture fixes, fittings, woodwork adjustments, and custom practical improvements.
+                        {% else %}
+                            Everyday repairs and maintenance support for the jobs that do not fit one simple box.
+                        {% endif %}
+                    </p>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container home-section">
+    <div class="row g-4 align-items-start">
         <div class="col-lg-7">
-            <div class="home-image-panel">
-                <img src="{% static 'marketplace/images/black-male-workshop.jpg' %}" alt="Black male craftsman working carefully with tools in a workshop">
-                <div class="home-image-panel-copy">
-                    <span class="eyebrow">Real work, real homes</span>
-                    <h2>Good help makes home jobs feel a lot easier.</h2>
-                    <p>Whether it is a quick fix or a bigger project, ProxiFix helps you find workers who are ready to show up and do the job well.</p>
-                </div>
+            <div class="home-section-heading">
+                <span class="eyebrow">Featured workers</span>
+                <h2>Evidence of technical quality starts with the people doing the work.</h2>
+                <p>ProxiFix surfaces workers with visible activity, skill tags, response expectations, and growth signals so hiring feels less like guesswork across repair categories.</p>
             </div>
-        </div>
-        <div class="col-lg-5">
-            <div class="panel-card home-panel rewards-panel h-100">
-                <div class="section-heading">
-                    <span class="eyebrow">FixPoints + XP</span>
-                    <h2>Simple to use, easy to follow.</h2>
-                    <p>Use FixPoints to post and apply. As workers do good jobs, their XP grows and their profiles get stronger.</p>
-                </div>
-                <div class="rewards-price-grid">
-                    <div class="reward-price-card">
-                        <strong>2</strong>
-                        <span>Post a job</span>
-                    </div>
-                    <div class="reward-price-card">
-                        <strong>1</strong>
-                        <span>Send a bid</span>
-                    </div>
-                    <div class="reward-price-card">
-                        <strong>3</strong>
-                        <span>Boost visibility</span>
-                    </div>
-                </div>
-                <div class="level-progress-list">
-                    {% for level in level_preview %}
-                        <div class="level-progress-item">
-                            <div class="level-progress-copy">
-                                <strong>{{ level.name }}</strong>
-                                <p>{{ level.benefit }}</p>
-                            </div>
-                            <span class="mini-pill">{{ level.threshold }} XP</span>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="container section-space">
-    <div class="section-heading">
-        <span class="eyebrow">Handymen at work</span>
-        <h2>See the kind of workers people hire through ProxiFix.</h2>
-        <p>These are the kinds of skilled workers customers want to find when something needs attention at home.</p>
-    </div>
-    <div class="home-gallery-grid">
-        <article class="home-gallery-card">
-            <img src="{% static 'marketplace/images/black-handyman-workshop.jpg' %}" alt="Black craftsman working with a drill in a woodworking shop">
-            <div class="home-gallery-copy">
-                <strong>Hands-on craftsmanship</strong>
-                <p>Careful, hands-on work for repairs, fittings, and detailed home projects.</p>
-            </div>
-        </article>
-        <article class="home-gallery-card">
-            <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Black tradeswoman carrying a large toolbox outdoors">
-            <div class="home-gallery-copy">
-                <strong>Toolbox ready</strong>
-                <p>Workers show up ready with the tools they need for the job.</p>
-            </div>
-        </article>
-        <article class="home-gallery-card">
-            <img src="{% static 'marketplace/images/black-female-carpenter.jpg' %}" alt="Black female carpenter wearing a leather apron and safety gear in a workshop">
-            <div class="home-gallery-copy">
-                <strong>Women at work</strong>
-                <p>Skilled women use ProxiFix too, and customers can hire them for real jobs.</p>
-            </div>
-        </article>
-        <article class="home-gallery-card">
-            <img src="{% static 'marketplace/images/black-male-workshop.jpg' %}" alt="Black male craftsman focusing on detailed work in a workshop">
-            <div class="home-gallery-copy">
-                <strong>Local craftsmanship</strong>
-                <p>Good workers bring skill, care, and consistency to every job.</p>
-            </div>
-        </article>
-    </div>
-</section>
-
-<section class="container section-space pb-5">
-    <div class="section-heading">
-        <span class="eyebrow">Featured workers</span>
-        <h2>Meet trusted local workers.</h2>
-        <p>Browse worker profiles, check experience, and find someone you can feel good hiring.</p>
-    </div>
-    <div class="row g-4">
-        {% for worker in featured_workers %}
-            <div class="col-md-6 col-xl-4">
-                <div class="worker-card home-worker-card">
-                    <div class="home-worker-top">
-                        <div class="home-worker-identity">
+            <div class="home-worker-proof-grid">
+                {% for worker in featured_workers|slice:":4" %}
+                    <article class="home-proof-card">
+                        <div class="home-proof-top">
                             <span class="worker-avatar">{{ worker.display_name|slice:":1"|upper }}</span>
                             <div>
-                                <span class="mini-pill">{{ worker.level_badge }}</span>
                                 <h3>{{ worker.display_name }}</h3>
                                 <p>{{ worker.city|default:'Available across locations' }}</p>
                             </div>
                         </div>
-                        <div class="score-chip">{{ worker.average_rating|floatformat:1 }}/5</div>
+                        <div class="home-proof-meta">
+                            <span>{{ worker.level_badge }}</span>
+                            <span>{{ worker.completed_jobs }} completed jobs</span>
+                            <span>{{ worker.response_time_hours }}h average reply</span>
+                        </div>
+                        <p>{{ worker.bio|default:'Reliable local worker profile ready for repairs, diagnostics, installations, maintenance, and practical fix-it work.'|truncatewords:20 }}</p>
+                    </article>
+                {% empty %}
+                    <article class="home-proof-card home-proof-card-empty">
+                        <h3>Worker profiles are on the way.</h3>
+                        <p>As workers join ProxiFix, this section will fill with real local profiles, skill coverage, and visible platform activity.</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="home-proof-visual">
+                <img src="{% static 'marketplace/images/black-handyman-hero.jpg' %}" alt="Worker holding a power drill and safety gear">
+                <div class="home-proof-callout">
+                    <strong>Better visibility</strong>
+                    <p>Profiles, ratings, XP, and reply speed all support faster decisions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container home-section">
+    <div class="home-cta-panel">
+        <div class="home-cta-copy">
+            <span class="eyebrow">Request service</span>
+            <h2>Discuss any repair need with less friction.</h2>
+            <p>Whether you are handling one urgent issue or lining up multiple repair needs across property, vehicles, engines, or equipment, ProxiFix helps you create a clear job post, reach the right workers, and keep the process moving.</p>
+            <div class="home-cta-points">
+                <span>Use FixPoints to post or apply</span>
+                <span>Review worker profiles before hiring</span>
+                <span>Track levels, badges, and completed jobs</span>
+            </div>
+        </div>
+        <div class="home-cta-card">
+            <span class="home-cta-card-kicker">Fast start</span>
+            <h3>Set your next repair in motion.</h3>
+            <div class="home-cta-card-list">
+                <div>
+                    <strong>1.</strong>
+                    <span>Create an account or sign in.</span>
+                </div>
+                <div>
+                    <strong>2.</strong>
+                    <span>Post the job or browse workers.</span>
+                </div>
+                <div>
+                    <strong>3.</strong>
+                    <span>Hire with better context and visibility.</span>
+                </div>
+            </div>
+            <div class="home-cta-actions">
+                {% if request.user.is_authenticated %}
+                    <a class="btn btn-brand" href="{% url 'job-create' %}">Create job request</a>
+                {% else %}
+                    <a class="btn btn-brand" href="{% url 'register' %}">Create account</a>
+                {% endif %}
+                <a class="btn btn-dark" href="{% url 'job-list' %}">View open jobs</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container home-section home-faq-section pb-5">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-6">
+            <div class="home-section-heading">
+                <span class="eyebrow">Frequently asked questions</span>
+                <h2>Answers to the core service questions people ask first.</h2>
+            </div>
+            <div class="accordion home-faq-accordion" id="homeFaq">
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                            What happens after I post a job?
+                        </button>
+                    </h3>
+                    <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#homeFaq">
+                        <div class="accordion-body">
+                            Your request appears in the marketplace so workers can review it and send proposals. You can then compare profiles, skills, ratings, and response expectations before choosing who to work with.
+                        </div>
                     </div>
-                    <p>{{ worker.bio|default:'Reliable, responsive, and ready to help.'|truncatewords:14 }}</p>
-                    <div class="skill-row">
-                        {% for skill in worker.skill_list|slice:':4' %}
-                            <span>{{ skill }}</span>
-                        {% empty %}
-                            <span>General Services</span>
-                        {% endfor %}
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                            How do FixPoints work?
+                        </button>
+                    </h3>
+                    <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
+                        <div class="accordion-body">
+                            Customers use FixPoints to post jobs, while workers use them to send applications. The wallet system keeps platform actions simple and predictable.
+                        </div>
                     </div>
-                    <div class="home-worker-footer">
-                        <span>{{ worker.completed_jobs }} jobs completed</span>
-                        <span>{{ worker.response_time_hours }}h avg reply</span>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
+                            Can I compare workers before hiring?
+                        </button>
+                    </h3>
+                    <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
+                        <div class="accordion-body">
+                            Yes. ProxiFix is built around comparison. You can review worker bios, skills, completed jobs, response time, badges, and ratings before making a decision.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">
+                            Is this only for home or renovation jobs?
+                        </button>
+                    </h3>
+                    <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
+                        <div class="accordion-body">
+                            No. The platform fits quick repairs, maintenance tasks, installations, and larger technical work across homes, vehicles, engines, appliances, and everyday fix-it problems people actually need solved.
+                        </div>
                     </div>
                 </div>
             </div>
-        {% empty %}
-            <div class="col-12">
-                <div class="empty-state-card">
-                    <strong>Worker profiles will appear here once workers sign up.</strong>
-                    <p>As more workers join ProxiFix, this section will start to fill up with real profiles and skills.</p>
+        </div>
+        <div class="col-lg-6">
+            <div class="home-faq-visual">
+                <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Tradeswoman carrying a toolbox outdoors">
+                <div class="home-faq-badge">
+                    <strong>Clearer</strong>
+                    <span>better repair decisions start with clearer information</span>
                 </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 </section>
 {% endblock %}

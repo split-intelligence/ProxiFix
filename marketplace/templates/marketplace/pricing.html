@@ -1,0 +1,172 @@
+{% extends 'marketplace/base.html' %}
+{% load static %}
+
+{% block title %}ProxiFix | Pricing{% endblock %}
+{% block body_class %}page-marketing{% endblock %}
+{% block header_class %}site-header-marketing{% endblock %}
+
+{% block content %}
+<section class="marketing-page-hero" style="background-image: linear-gradient(90deg, rgba(10, 14, 21, 0.88) 0%, rgba(10, 14, 21, 0.72) 42%, rgba(10, 14, 21, 0.86) 100%), url('{% static 'marketplace/images/black-handyman-hero.jpg' %}');">
+    <div class="container">
+        <div class="marketing-page-hero-copy">
+            <span class="marketing-page-kicker">ProxiFix</span>
+            <h1>Pricing</h1>
+            <div class="marketing-page-breadcrumbs">
+                <a href="{% url 'home' %}">Home</a>
+                <span>/</span>
+                <strong>Pricing</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container marketing-page-section">
+    <div class="marketing-section-heading marketing-section-heading-center">
+        <span class="eyebrow">FixPoints pricing</span>
+        <h2>Structured pricing for the platform actions that keep repairs moving.</h2>
+        <p>FixPoints handle job posting, applications, and visibility boosts. Actual repair pricing is still agreed directly between customer and worker based on the real job.</p>
+    </div>
+    <div class="marketing-price-grid">
+        {% for package in pricing_packages %}
+            <article class="marketing-price-card {% if package.highlighted %}marketing-price-card-featured{% endif %}">
+                <span class="marketing-price-kicker">{{ package.name }}</span>
+                <h3>{{ package.name }}</h3>
+                <p>{{ package.summary }}</p>
+                <div class="marketing-price-amount">
+                    <strong>&#8358;{{ package.naira_amount }}</strong>
+                    <span>{{ package.credits }} FixPoints</span>
+                </div>
+                <ul class="marketing-feature-list">
+                    {% for feature in package.features %}
+                        <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <a class="btn {% if package.highlighted %}btn-brand{% else %}btn-dark{% endif %}" href="{{ pricing_cta_url }}">{{ pricing_cta_label }}</a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container marketing-page-section">
+    <div class="marketing-section-heading">
+        <span class="eyebrow">How pricing works</span>
+        <h2>FixPoints cover platform access. Repair quotes stay tied to the actual work.</h2>
+        <p>That split keeps the marketplace practical. You pay for platform actions transparently, while workers quote based on what the job really requires.</p>
+    </div>
+    <div class="marketing-guidance-grid">
+        {% for item in pricing_guidance %}
+            <article class="marketing-guidance-card">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.text }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container marketing-page-section">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+            <div class="marketing-section-heading">
+                <span class="eyebrow">Trust and proof</span>
+                <h2>Clearer platform pricing helps people make better repair decisions.</h2>
+                <p>These proof points explain why ProxiFix pricing is intentionally transparent about platform actions while leaving room for real-world repair quoting.</p>
+            </div>
+            <div class="marketing-proof-grid">
+                {% for proof in proof_cards %}
+                    <article class="marketing-proof-card">
+                        <h3>{{ proof.title }}</h3>
+                        <p>{{ proof.text }}</p>
+                        <span>{{ proof.byline }}</span>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="marketing-side-photo">
+                <img src="{% static 'marketplace/images/black-handyman-smile.jpg' %}" alt="Smiling technician holding a drill">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container marketing-page-section">
+    <div class="marketing-cta-split">
+        <div class="marketing-cta-dark">
+            <span class="eyebrow">Next steps</span>
+            <h2>Turn pricing clarity into action.</h2>
+            <p>Once you understand how FixPoints work, the next step is simple: browse jobs, compare workers, or top up your wallet and move the repair forward.</p>
+            <div class="marketing-action-points">
+                <div>
+                    <strong>Platform actions</strong>
+                    <span>Use FixPoints for posting, applying, and boosting visibility.</span>
+                </div>
+                <div>
+                    <strong>Real-world quotes</strong>
+                    <span>Workers price the actual repair based on the scope, urgency, and materials involved.</span>
+                </div>
+                <div>
+                    <strong>Better comparison</strong>
+                    <span>Review worker profiles, trust signals, and proposal context before making a choice.</span>
+                </div>
+            </div>
+        </div>
+        <div class="marketing-action-card">
+            <span class="marketing-action-kicker">CTA only</span>
+            <h3>Choose what you want to do next.</h3>
+            <p>No extra inquiry form needed here. Go straight to the relevant part of the platform.</p>
+            <div class="marketing-action-button-stack">
+                {% for action in cta_panel_actions %}
+                    <a class="btn {{ action.style }}" href="{{ action.url }}">{{ action.label }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container marketing-page-section">
+    <div class="marketing-faq-grid">
+        <div>
+            <div class="marketing-section-heading">
+                <span class="eyebrow">Pricing FAQ</span>
+                <h2>Answers to the most important pricing questions.</h2>
+            </div>
+            <div class="accordion marketing-accordion" id="pricingFaq">
+                {% for item in pricing_faqs %}
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button {% if not item.expanded %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ item.slug }}" aria-expanded="{% if item.expanded %}true{% else %}false{% endif %}" aria-controls="{{ item.slug }}">
+                                {{ item.question }}
+                            </button>
+                        </h3>
+                        <div id="{{ item.slug }}" class="accordion-collapse collapse {% if item.expanded %}show{% endif %}" data-bs-parent="#pricingFaq">
+                            <div class="accordion-body">
+                                {{ item.answer }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="marketing-support-visual">
+            <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Tradeswoman carrying a toolbox outdoors">
+            <div class="marketing-support-badge">
+                <strong>Paystack</strong>
+                <span>handles wallet purchases, with balances updated after payment verification</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container marketing-page-section pb-5">
+    <div class="marketing-banner-cta">
+        <div>
+            <span class="eyebrow">Ready to move</span>
+            <h2>Use transparent platform pricing to start the repair process with more confidence.</h2>
+            <p>Choose a FixPoints package, post a job, compare workers, and let the actual repair pricing follow the reality of the work.</p>
+        </div>
+        <div class="marketing-banner-actions">
+            <a class="btn btn-brand btn-lg" href="{{ pricing_cta_url }}">{{ pricing_cta_label }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

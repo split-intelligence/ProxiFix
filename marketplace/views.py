@@ -40,6 +40,161 @@ def ensure_role(request, *roles):
     return profile
 
 
+def get_marketing_page_context(request):
+    is_authenticated = request.user.is_authenticated
+    primary_cta_url = reverse('job-create') if is_authenticated else reverse('register')
+    primary_cta_label = 'Post a repair job' if is_authenticated else 'Create your ProxiFix account'
+    pricing_cta_url = reverse('wallet') if is_authenticated else reverse('register')
+    pricing_cta_label = 'Buy FixPoints' if is_authenticated else 'Create account to buy FixPoints'
+
+    about_faqs = [
+        {
+            'slug': 'aboutOne',
+            'question': 'What kinds of repairs can people post on ProxiFix?',
+            'answer': 'ProxiFix supports a wide range of repair and maintenance needs, including home fixes, vehicle issues, engine work, appliance repair, electrical jobs, installations, and other practical technical work.',
+            'expanded': True,
+        },
+        {
+            'slug': 'aboutTwo',
+            'question': 'How does ProxiFix help people choose workers?',
+            'answer': 'Customers can compare workers by skills, response time, completed jobs, ratings, and visible level progress before deciding who to hire.',
+            'expanded': False,
+        },
+        {
+            'slug': 'aboutThree',
+            'question': 'Is ProxiFix only for large projects?',
+            'answer': 'No. The platform works for quick fixes, scheduled maintenance, diagnostics, upgrades, and larger repair jobs that need a clearer process.',
+            'expanded': False,
+        },
+        {
+            'slug': 'aboutFour',
+            'question': 'Why use a marketplace instead of direct messaging people?',
+            'answer': 'The marketplace structure helps users describe jobs clearly, compare workers in one place, and track activity with more context than scattered chat conversations.',
+            'expanded': False,
+        },
+    ]
+
+    pricing_faqs = [
+        {
+            'slug': 'pricingOne',
+            'question': 'What do FixPoints pay for on ProxiFix?',
+            'answer': 'FixPoints cover platform actions like posting jobs, sending applications, and boosting visibility. They do not replace the actual amount agreed for a repair job.',
+            'expanded': True,
+        },
+        {
+            'slug': 'pricingTwo',
+            'question': 'How is the actual repair price decided?',
+            'answer': 'The final repair cost is agreed between the customer and the worker based on the scope of work, urgency, labor involved, parts needed, and the worker’s own pricing.',
+            'expanded': False,
+        },
+        {
+            'slug': 'pricingThree',
+            'question': 'Do quotes usually include labor and parts?',
+            'answer': 'That depends on the worker and the job. Customers should confirm whether parts, transport, diagnostics, and labor are all included before accepting a proposal.',
+            'expanded': False,
+        },
+        {
+            'slug': 'pricingFour',
+            'question': 'When does a FixPoints top-up become available?',
+            'answer': 'Wallet top-ups only increase the balance after payment verification is completed successfully through Paystack.',
+            'expanded': False,
+        },
+    ]
+    pricing_faqs[1]['answer'] = "The final repair cost is agreed between the customer and the worker based on the scope of work, urgency, labor involved, parts needed, and the worker's own pricing."
+
+    return {
+        'primary_cta_url': primary_cta_url,
+        'primary_cta_label': primary_cta_label,
+        'pricing_cta_url': pricing_cta_url,
+        'pricing_cta_label': pricing_cta_label,
+        'repair_lanes': [
+            'Property Repairs',
+            'Vehicle Repairs',
+            'Engine Work',
+            'Electrical Fixes',
+            'Appliance Repair',
+            'General Maintenance',
+        ],
+        'about_values': [
+            {
+                'index': '01',
+                'title': 'Structured job posting',
+                'text': 'Customers can describe scope, urgency, location, and budget in a format workers can act on quickly.',
+            },
+            {
+                'index': '02',
+                'title': 'Stronger worker comparison',
+                'text': 'Profiles, skills, reply speed, ratings, and completed jobs give users better hiring context.',
+            },
+            {
+                'index': '03',
+                'title': 'Visible trust signals',
+                'text': 'XP, badges, and platform activity make reliable workers easier to recognize across categories.',
+            },
+            {
+                'index': '04',
+                'title': 'Clear marketplace momentum',
+                'text': 'FixPoints keep posting, applying, and visibility boosts practical without adding unnecessary friction.',
+            },
+        ],
+        'proof_cards': [
+            {
+                'title': 'Transparent platform actions',
+                'text': 'Posting, applying, and boosting are tied to known FixPoints costs, so platform usage stays predictable.',
+                'byline': 'Pricing clarity',
+            },
+            {
+                'title': 'Worker-led quoting',
+                'text': 'Real repair pricing stays flexible because workers can respond to the actual job scope, urgency, and materials involved.',
+                'byline': 'Better fit',
+            },
+            {
+                'title': 'Designed for real-world repairs',
+                'text': 'From home callouts to engine checks and equipment fixes, ProxiFix supports repair work that does not fit one narrow service box.',
+                'byline': 'Broader coverage',
+            },
+            {
+                'title': 'Cleaner decision-making',
+                'text': 'Customers can move from request to shortlist with more context instead of relying on guesswork or fragmented conversations.',
+                'byline': 'Marketplace visibility',
+            },
+        ],
+        'pricing_guidance': [
+            {
+                'title': 'Platform credits',
+                'text': 'FixPoints are used for platform actions like posting jobs, applying to work, and boosting visibility.',
+            },
+            {
+                'title': 'Worker-set job pricing',
+                'text': 'Workers quote for the actual repair itself, so customers can compare proposals before making a decision.',
+            },
+            {
+                'title': 'Scope affects final cost',
+                'text': 'Complexity, urgency, transport, diagnostics, labor, and required parts all influence the final repair price.',
+            },
+        ],
+        'cta_panel_actions': [
+            {
+                'label': 'View open jobs',
+                'url': reverse('job-list'),
+                'style': 'btn-dark',
+            },
+            {
+                'label': 'Find workers',
+                'url': reverse('worker-directory'),
+                'style': 'btn-outline-dark',
+            },
+            {
+                'label': 'Buy FixPoints' if is_authenticated else 'Create account',
+                'url': pricing_cta_url,
+                'style': 'btn-brand',
+            },
+        ],
+        'about_faqs': about_faqs,
+        'pricing_faqs': pricing_faqs,
+    }
+
+
 def home(request):
     featured_workers = Profile.objects.filter(role=Profile.WORKER).select_related('user')[:6]
     open_jobs = Job.objects.filter(status=Job.OPEN).select_related('customer__user')[:6]
@@ -53,6 +208,40 @@ def home(request):
             'level_preview': level_preview,
         },
     )
+
+
+def about(request):
+    return render(request, 'marketplace/about.html', get_marketing_page_context(request))
+
+
+def pricing(request):
+    context = get_marketing_page_context(request)
+    package_copy = {
+        'starter': {
+            'summary': 'A simple way to get started with posting or applying on the platform.',
+            'features': ['50 FixPoints included', 'Good for first-time use', 'Fast Paystack top-up'],
+        },
+        'value': {
+            'summary': 'The strongest balance for steady activity across jobs, bids, and visibility.',
+            'features': ['110 FixPoints included', 'Best everyday value', 'Great for repeat platform use'],
+        },
+        'pro': {
+            'summary': 'Built for heavier usage when you need more room for consistent marketplace activity.',
+            'features': ['250 FixPoints included', 'Higher-volume usage', 'Better headroom for frequent actions'],
+        },
+    }
+    packages = []
+    for index, package in enumerate(get_fixpoint_packages()):
+        extra = package_copy.get(package['code'], {'summary': '', 'features': []})
+        packages.append(
+            {
+                **package,
+                **extra,
+                'highlighted': index == 1,
+            }
+        )
+    context['pricing_packages'] = packages
+    return render(request, 'marketplace/pricing.html', context)
 
 
 def register(request):

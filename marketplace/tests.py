@@ -357,3 +357,41 @@ class MarketplaceSmokeTests(TestCase):
         self.assertNotContains(response, 'name="hourly_rate"')
         self.assertNotContains(response, 'name="response_time_hours"')
         self.assertNotContains(response, 'name="is_verified"')
+
+    def test_about_page_renders_with_navigation_links(self):
+        response = self.client.get(reverse('about'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'marketplace/about.html')
+        self.assertContains(response, reverse('about'))
+        self.assertContains(response, reverse('pricing'))
+
+    def test_pricing_page_renders_real_fixpoint_packages(self):
+        response = self.client.get(reverse('pricing'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'marketplace/pricing.html')
+        self.assertContains(response, 'Starter Pack')
+        self.assertContains(response, 'Value Pack')
+        self.assertContains(response, 'Pro Pack')
+        self.assertContains(response, '&#8358;500')
+        self.assertContains(response, '&#8358;1000')
+        self.assertContains(response, '&#8358;2000')
+        self.assertContains(response, '50 FixPoints')
+        self.assertContains(response, '110 FixPoints')
+        self.assertContains(response, '250 FixPoints')
+
+    def test_logged_out_pricing_page_uses_register_cta(self):
+        response = self.client.get(reverse('pricing'))
+
+        self.assertContains(response, 'Create account to buy FixPoints')
+        self.assertContains(response, f'href="{reverse("register")}"')
+
+    def test_logged_in_pricing_page_uses_wallet_cta(self):
+        user = User.objects.create_user(username='pricing-user', password='pass12345')
+        self.client.login(username='pricing-user', password='pass12345')
+
+        response = self.client.get(reverse('pricing'))
+
+        self.assertContains(response, 'Buy FixPoints')
+        self.assertContains(response, f'href="{reverse("wallet")}"')
