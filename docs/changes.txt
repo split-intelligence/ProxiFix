@@ -41,3 +41,11 @@ Pricing Strategy
 ○  ₦500 → 50 credits 
 ○  ₦1000 → 110 credits 
 ○  ₦2000 → 250 credits 
+
+------------------------------------------------------------------------------->
+
+Make the homepage more attractive, and modern like a modern app.
+less write-up and more images and shape, not MOGs. 
+
+Send an email to customer on bid by the worker and on accepting 
+the bid send an email to both with the contacts of the other party.

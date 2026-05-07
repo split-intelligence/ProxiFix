@@ -21,6 +21,8 @@ from .services import (
     initialize_paystack_topup,
     record_credit_change,
     recommend_workers,
+    sort_jobs_for_profile,
+    sort_workers_for_profile,
     verify_paystack_topup,
 )
 
@@ -83,7 +85,11 @@ def dashboard(request):
                 'open_count': jobs.filter(status=Job.OPEN).count(),
                 'completed_count': jobs.filter(status=Job.COMPLETED).count(),
                 'applications_received': JobApplication.objects.filter(job__customer=profile).count(),
-                'recommended_workers': Profile.objects.filter(role=Profile.WORKER).select_related('user')[:5],
+                'recommended_workers': sort_workers_for_profile(
+                    profile,
+                    Profile.objects.filter(role=Profile.WORKER).select_related('user'),
+                    limit=5,
+                ),
                 'is_customer': True,
             }
         )
@@ -95,12 +101,7 @@ def dashboard(request):
         )
         job_history = applications.filter(status=JobApplication.ACCEPTED)
         open_jobs = Job.objects.filter(status=Job.OPEN).exclude(customer=profile).select_related('customer__user')
-        available_jobs = list(open_jobs[:24])
-        if profile.city:
-            city = profile.city.lower()
-            available_jobs.sort(
-                key=lambda job: city not in job.display_location.lower()
-            )
+        available_jobs = sort_jobs_for_profile(profile, open_jobs, limit=24)
         context.update(
             {
                 'applications': applications[:5],
@@ -150,6 +151,7 @@ def job_list(request):
     applied_ids = set()
     if profile and profile.role == Profile.WORKER:
         applied_ids = set(profile.applications.values_list('job_id', flat=True))
+        jobs = sort_jobs_for_profile(profile, jobs)
 
     return render(
         request,
@@ -171,6 +173,8 @@ def worker_directory(request):
         workers = workers.filter(Q(skills__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query))
     if city:
         workers = workers.filter(city__icontains=city)
+    profile = get_profile(request.user) if request.user.is_authenticated else None
+    workers = sort_workers_for_profile(profile, workers)
 
     return render(request, 'marketplace/worker_directory.html', {'workers': workers})
 

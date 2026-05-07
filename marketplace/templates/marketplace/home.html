@@ -1,36 +1,62 @@
 {% extends 'marketplace/base.html' %}
+{% load static %}
 
 {% block title %}ProxiFix | Home{% endblock %}
 
 {% block content %}
-<section class="hero-wrap">
+<section class="home-hero hero-wrap">
+    <div class="home-hero-backdrop" aria-hidden="true">
+        <span class="hero-blob hero-blob-one"></span>
+        <span class="hero-blob hero-blob-two"></span>
+        <span class="hero-grid"></span>
+    </div>
     <div class="container">
         <div class="row align-items-center g-4">
-            <div class="col-lg-7">
-                <div class="hero-card">
-                    <span class="eyebrow">Local service marketplace</span>
-                    <h1>Find trusted local workers and manage every job with confidence.</h1>
-                    <p>ProxiFix helps customers post by city and address, compare trusted workers, and buy FixPoints securely through Paystack before posting or bidding.</p>
+            <div class="col-lg-6">
+                <div class="hero-card home-hero-copy">
+                    <span class="eyebrow">Home repair and improvement</span>
+                    <h1>Need something fixed at home? Find a trusted local worker.</h1>
+                    <p>From plumbing and electrical work to carpentry, painting, and installations, ProxiFix helps you find skilled workers for the jobs that matter at home.</p>
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Create Your Account</a>
-                        <a class="btn btn-light btn-lg" href="{% url 'job-list' %}">Browse Open Jobs</a>
+                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Get started</a>
+                        <a class="btn btn-light btn-lg" href="{% url 'worker-directory' %}">Find workers</a>
+                    </div>
+                    <div class="hero-chip-row">
+                        <span class="hero-chip"><strong>{{ featured_workers|length }}</strong> trusted workers</span>
+                        <span class="hero-chip"><strong>Big or small</strong> home jobs</span>
+                        <span class="hero-chip"><strong>Wallet</strong> top-up available</span>
+                    </div>
+                    <div class="hero-mini-stats">
+                        <div class="hero-mini-stat">
+                            <strong>2 FixPoints</strong>
+                            <span>Post a job request</span>
+                        </div>
+                        <div class="hero-mini-stat">
+                            <strong>1 FixPoint</strong>
+                            <span>Send a proposal</span>
+                        </div>
+                        <div class="hero-mini-stat">
+                            <strong>Repair and install</strong>
+                            <span>Plumbing, electrical, carpentry, and more</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="stats-stack">
-                    <div class="stat-card">
-                        <strong>2 FixPoints</strong>
-                        <span>to publish a job</span>
-                    </div>
-                    <div class="stat-card">
-                        <strong>1 FixPoint</strong>
-                        <span>to apply as a worker</span>
-                    </div>
-                    <div class="stat-card">
-                        <strong>3 FixPoints</strong>
-                        <span>to boost visibility for urgent openings</span>
-                    </div>
+            <div class="col-lg-6">
+                <div class="home-photo-collage" aria-label="Handymen at work">
+                    <figure class="photo-card photo-card-main">
+                        <img src="{% static 'marketplace/images/black-handyman-workshop.jpg' %}" alt="Black craftsman drilling wood in a workshop">
+                    </figure>
+                    <figure class="photo-card photo-card-side">
+                        <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Black tradeswoman carrying a toolbox on site">
+                    </figure>
+                    <figure class="photo-card photo-card-side photo-card-tall">
+                        <img src="{% static 'marketplace/images/black-female-carpenter.jpg' %}" alt="Black female carpenter adjusting ear protection inside a workshop">
+                    </figure>
+                    <div class="photo-floating-badge">Trusted local workers</div>
+                    <div class="photo-floating-chip photo-chip-one">Plumbing Services</div>
+                    <div class="photo-floating-chip photo-chip-two">Workshop skill</div>
+                    <div class="photo-floating-chip photo-chip-three">Fixture and Hardware Installation</div>
                 </div>
             </div>
         </div>
@@ -38,70 +64,80 @@
 </section>
 
 <section class="container section-space">
-    <div class="section-heading">
-        <span class="eyebrow">How It Works</span>
-        <h2>Designed around customer and worker journeys</h2>
+    <div class="home-band">
+        <div class="section-heading home-band-copy">
+            <span class="eyebrow">Our services</span>
+            <h2>The kind of help people need around the house.</h2>
+            <p>Book local workers for repairs, installations, maintenance, and everyday fixes.</p>
+        </div>
+        <div class="service-tile-grid">
+            {% for value, label in open_jobs.model.CATEGORY_CHOICES|slice:":6" %}
+                <div class="service-tile">
+                    <span class="service-tile-code">0{{ forloop.counter }}</span>
+                    <strong>{{ label }}</strong>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h3>1. Post a job</h3>
-                <p>Customers post jobs with category, city, address, urgency, and budget. Workers browse, filter, and submit brief proposals.</p>
-            </div>
+ </section>
+
+<section class="container section-space">
+    <div class="flow-strip">
+        <div class="flow-step">
+            <span class="flow-number">01</span>
+            <h3>Tell us the job</h3>
+            <p>Tell us what you need, where you are, and how urgent it is.</p>
         </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h3>2. Match by trust</h3>
-                <p>Search results highlight workers based on level, review quality, response speed, and proximity.</p>
-            </div>
+        <div class="flow-step">
+            <span class="flow-number">02</span>
+            <h3>Choose your worker</h3>
+            <p>Check profiles, compare workers, and go with the one that feels right.</p>
         </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h3>3. Reward great work</h3>
-                <p>Completed jobs earn XP, update work history, and strengthen worker rankings for future matches.</p>
-            </div>
+        <div class="flow-step">
+            <span class="flow-number">03</span>
+            <h3>Get it done</h3>
+            <p>Keep things moving, follow the job, and build trust through real work.</p>
         </div>
     </div>
 </section>
 
 <section class="container section-space">
-    <div class="row g-4">
+    <div class="row g-4 align-items-stretch">
         <div class="col-lg-7">
-            <div class="panel-card">
-                <div class="section-heading">
-                    <span class="eyebrow">Fresh Demand</span>
-                    <h2>Open Jobs</h2>
-                </div>
-                <div class="list-grid">
-                    {% for job in open_jobs %}
-                        <a class="listing-card" href="{{ job.get_absolute_url }}">
-                            <div class="listing-top">
-                                <span class="badge text-bg-dark">{{ job.category }}</span>
-                                <span class="mini-pill">{{ job.get_urgency_display }}</span>
-                            </div>
-                            <h3>{{ job.title }}</h3>
-                            <p>{{ job.description|truncatewords:18 }}</p>
-                            <div class="meta-line">
-                                <span>{{ job.display_location }}</span>
-                                <strong>&#8358;{{ job.budget_min }} - &#8358;{{ job.budget_max }}</strong>
-                            </div>
-                        </a>
-                    {% empty %}
-                        <p class="text-muted mb-0">No open jobs right now.</p>
-                    {% endfor %}
+            <div class="home-image-panel">
+                <img src="{% static 'marketplace/images/black-male-workshop.jpg' %}" alt="Black male craftsman working carefully with tools in a workshop">
+                <div class="home-image-panel-copy">
+                    <span class="eyebrow">Real work, real homes</span>
+                    <h2>Good help makes home jobs feel a lot easier.</h2>
+                    <p>Whether it is a quick fix or a bigger project, ProxiFix helps you find workers who are ready to show up and do the job well.</p>
                 </div>
             </div>
         </div>
         <div class="col-lg-5">
-            <div class="panel-card h-100">
+            <div class="panel-card home-panel rewards-panel h-100">
                 <div class="section-heading">
-                    <span class="eyebrow">Leveling System</span>
-                    <h2>XP tiers</h2>
+                    <span class="eyebrow">FixPoints + XP</span>
+                    <h2>Simple to use, easy to follow.</h2>
+                    <p>Use FixPoints to post and apply. As workers do good jobs, their XP grows and their profiles get stronger.</p>
                 </div>
-                <div class="level-list">
+                <div class="rewards-price-grid">
+                    <div class="reward-price-card">
+                        <strong>2</strong>
+                        <span>Post a job</span>
+                    </div>
+                    <div class="reward-price-card">
+                        <strong>1</strong>
+                        <span>Send a bid</span>
+                    </div>
+                    <div class="reward-price-card">
+                        <strong>3</strong>
+                        <span>Boost visibility</span>
+                    </div>
+                </div>
+                <div class="level-progress-list">
                     {% for level in level_preview %}
-                        <div class="level-card">
-                            <div>
+                        <div class="level-progress-item">
+                            <div class="level-progress-copy">
                                 <strong>{{ level.name }}</strong>
                                 <p>{{ level.benefit }}</p>
                             </div>
@@ -114,24 +150,66 @@
     </div>
 </section>
 
+<section class="container section-space">
+    <div class="section-heading">
+        <span class="eyebrow">Handymen at work</span>
+        <h2>See the kind of workers people hire through ProxiFix.</h2>
+        <p>These are the kinds of skilled workers customers want to find when something needs attention at home.</p>
+    </div>
+    <div class="home-gallery-grid">
+        <article class="home-gallery-card">
+            <img src="{% static 'marketplace/images/black-handyman-workshop.jpg' %}" alt="Black craftsman working with a drill in a woodworking shop">
+            <div class="home-gallery-copy">
+                <strong>Hands-on craftsmanship</strong>
+                <p>Careful, hands-on work for repairs, fittings, and detailed home projects.</p>
+            </div>
+        </article>
+        <article class="home-gallery-card">
+            <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Black tradeswoman carrying a large toolbox outdoors">
+            <div class="home-gallery-copy">
+                <strong>Toolbox ready</strong>
+                <p>Workers show up ready with the tools they need for the job.</p>
+            </div>
+        </article>
+        <article class="home-gallery-card">
+            <img src="{% static 'marketplace/images/black-female-carpenter.jpg' %}" alt="Black female carpenter wearing a leather apron and safety gear in a workshop">
+            <div class="home-gallery-copy">
+                <strong>Women at work</strong>
+                <p>Skilled women use ProxiFix too, and customers can hire them for real jobs.</p>
+            </div>
+        </article>
+        <article class="home-gallery-card">
+            <img src="{% static 'marketplace/images/black-male-workshop.jpg' %}" alt="Black male craftsman focusing on detailed work in a workshop">
+            <div class="home-gallery-copy">
+                <strong>Local craftsmanship</strong>
+                <p>Good workers bring skill, care, and consistency to every job.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
 <section class="container section-space pb-5">
     <div class="section-heading">
-        <span class="eyebrow">Top Talent</span>
-        <h2>Featured workers</h2>
+        <span class="eyebrow">Featured workers</span>
+        <h2>Meet trusted local workers.</h2>
+        <p>Browse worker profiles, check experience, and find someone you can feel good hiring.</p>
     </div>
     <div class="row g-4">
         {% for worker in featured_workers %}
             <div class="col-md-6 col-xl-4">
-                <div class="worker-card">
-                    <div class="d-flex justify-content-between align-items-start gap-3">
-                        <div>
-                            <span class="mini-pill">{{ worker.level_badge }}</span>
-                            <h3 class="mt-3">{{ worker.display_name }}</h3>
-                            <p class="mb-1">{{ worker.city|default:'Available across locations' }}</p>
+                <div class="worker-card home-worker-card">
+                    <div class="home-worker-top">
+                        <div class="home-worker-identity">
+                            <span class="worker-avatar">{{ worker.display_name|slice:":1"|upper }}</span>
+                            <div>
+                                <span class="mini-pill">{{ worker.level_badge }}</span>
+                                <h3>{{ worker.display_name }}</h3>
+                                <p>{{ worker.city|default:'Available across locations' }}</p>
+                            </div>
                         </div>
                         <div class="score-chip">{{ worker.average_rating|floatformat:1 }}/5</div>
                     </div>
-                    <p>{{ worker.bio|default:'Reliable, responsive, and ready to help.'|truncatewords:18 }}</p>
+                    <p>{{ worker.bio|default:'Reliable, responsive, and ready to help.'|truncatewords:14 }}</p>
                     <div class="skill-row">
                         {% for skill in worker.skill_list|slice:':4' %}
                             <span>{{ skill }}</span>
@@ -139,10 +217,19 @@
                             <span>General Services</span>
                         {% endfor %}
                     </div>
+                    <div class="home-worker-footer">
+                        <span>{{ worker.completed_jobs }} jobs completed</span>
+                        <span>{{ worker.response_time_hours }}h avg reply</span>
+                    </div>
                 </div>
             </div>
         {% empty %}
-            <p class="text-muted">Worker profiles will appear here once workers sign up.</p>
+            <div class="col-12">
+                <div class="empty-state-card">
+                    <strong>Worker profiles will appear here once workers sign up.</strong>
+                    <p>As more workers join ProxiFix, this section will start to fill up with real profiles and skills.</p>
+                </div>
+            </div>
         {% endfor %}
     </div>
 </section>

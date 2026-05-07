@@ -59,6 +59,44 @@ class MarketplaceSmokeTests(TestCase):
         ranked = recommend_workers(job)
         self.assertEqual(ranked[0]['worker'], worker_profile)
 
+    def test_worker_directory_prioritizes_nearby_workers_before_farther_higher_xp_workers(self):
+        customer = User.objects.create_user(username='customer-nearby', password='pass12345')
+        customer_profile = customer.profile
+        customer_profile.city = 'Lagos'
+        customer_profile.address = 'Yaba'
+        customer_profile.save()
+
+        far_worker = User.objects.create_user(username='far-elite', password='pass12345')
+        far_profile = far_worker.profile
+        far_profile.role = Profile.WORKER
+        far_profile.city = 'Abuja'
+        far_profile.address = 'Wuse'
+        far_profile.xp = 500
+        far_profile.save()
+
+        lower_xp_near_worker = User.objects.create_user(username='lagos-junior', password='pass12345')
+        lower_xp_near_profile = lower_xp_near_worker.profile
+        lower_xp_near_profile.role = Profile.WORKER
+        lower_xp_near_profile.city = 'Lagos'
+        lower_xp_near_profile.address = 'Yaba'
+        lower_xp_near_profile.xp = 50
+        lower_xp_near_profile.save()
+
+        higher_xp_near_worker = User.objects.create_user(username='lagos-senior', password='pass12345')
+        higher_xp_near_profile = higher_xp_near_worker.profile
+        higher_xp_near_profile.role = Profile.WORKER
+        higher_xp_near_profile.city = 'Lagos'
+        higher_xp_near_profile.address = 'Yaba'
+        higher_xp_near_profile.xp = 200
+        higher_xp_near_profile.save()
+
+        self.client.login(username='customer-nearby', password='pass12345')
+        response = self.client.get(reverse('worker-directory'))
+        content = response.content.decode('utf-8')
+
+        self.assertLess(content.index('lagos-senior'), content.index('lagos-junior'))
+        self.assertLess(content.index('lagos-junior'), content.index('far-elite'))
+
     def test_level_metadata_advances(self):
         self.assertEqual(get_level_metadata(0)['name'], 'Starter')
         self.assertEqual(get_level_metadata(600)['name'], 'Elite')
@@ -90,6 +128,50 @@ class MarketplaceSmokeTests(TestCase):
         job = Job.objects.get(title='Outlet repair')
         self.assertEqual(profile.wallet_credits, 8)
         self.assertEqual(job.credits_spent, 2)
+
+    def test_job_list_prioritizes_nearby_jobs_for_workers(self):
+        worker = User.objects.create_user(username='worker-nearby', password='pass12345')
+        worker_profile = worker.profile
+        worker_profile.role = Profile.WORKER
+        worker_profile.city = 'Lagos'
+        worker_profile.address = 'Yaba'
+        worker_profile.save()
+
+        far_customer = User.objects.create_user(username='customer-far', password='pass12345')
+        far_customer.profile.city = 'Abuja'
+        far_customer.profile.address = 'Wuse'
+        far_customer.profile.save()
+        Job.objects.create(
+            customer=far_customer.profile,
+            category='Cleaning',
+            title='Abuja move-out clean',
+            description='Need help cleaning a flat in Abuja',
+            location_label='Abuja',
+            location_address='Wuse',
+            budget_min=18000,
+            budget_max=24000,
+        )
+
+        near_customer = User.objects.create_user(username='customer-near', password='pass12345')
+        near_customer.profile.city = 'Lagos'
+        near_customer.profile.address = 'Yaba'
+        near_customer.profile.save()
+        Job.objects.create(
+            customer=near_customer.profile,
+            category='Cleaning',
+            title='Yaba apartment clean',
+            description='Need a cleaner in Yaba this weekend',
+            location_label='Lagos',
+            location_address='Yaba',
+            budget_min=15000,
+            budget_max=22000,
+        )
+
+        self.client.login(username='worker-nearby', password='pass12345')
+        response = self.client.get(reverse('job-list'))
+        content = response.content.decode('utf-8')
+
+        self.assertLess(content.index('Yaba apartment clean'), content.index('Abuja move-out clean'))
 
     def test_existing_wallet_balance_only_changes_after_verified_topup(self):
         customer = User.objects.create_user(

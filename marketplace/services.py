@@ -133,6 +133,73 @@ def recommend_workers(job, queryset=None, limit=6):
     return ranked[:limit]
 
 
+def _text_location_priority(city='', address='', location_text=''):
+    city = (city or '').strip().lower()
+    address = (address or '').strip().lower()
+    location_text = (location_text or '').strip().lower()
+    if address and address in location_text:
+        return 0
+    if city and city in location_text:
+        return 1
+    return 2
+
+
+def worker_location_sort_key(reference_profile, worker):
+    distance = haversine_distance(
+        getattr(reference_profile, 'latitude', None),
+        getattr(reference_profile, 'longitude', None),
+        worker.latitude,
+        worker.longitude,
+    )
+    if distance is not None:
+        return (0, round(distance, 1))
+    return (
+        1 + _text_location_priority(
+            getattr(reference_profile, 'city', ''),
+            getattr(reference_profile, 'address', ''),
+            f'{worker.city} {worker.address}',
+        ),
+        0,
+    )
+
+
+def job_location_sort_key(reference_profile, job):
+    distance = haversine_distance(
+        getattr(reference_profile, 'latitude', None),
+        getattr(reference_profile, 'longitude', None),
+        job.latitude,
+        job.longitude,
+    )
+    if distance is not None:
+        return (0, round(distance, 1))
+    return (
+        1 + _text_location_priority(
+            getattr(reference_profile, 'city', ''),
+            getattr(reference_profile, 'address', ''),
+            job.display_location,
+        ),
+        0,
+    )
+
+
+def sort_workers_for_profile(reference_profile, queryset=None, limit=None):
+    workers = list(queryset or Profile.objects.filter(role=Profile.WORKER).select_related('user'))
+    if reference_profile:
+        workers.sort(key=lambda worker: worker_location_sort_key(reference_profile, worker))
+    if limit is not None:
+        return workers[:limit]
+    return workers
+
+
+def sort_jobs_for_profile(reference_profile, queryset=None, limit=None):
+    jobs = list(queryset or Job.objects.filter(status=Job.OPEN).select_related('customer__user', 'selected_worker__user'))
+    if reference_profile:
+        jobs.sort(key=lambda job: job_location_sort_key(reference_profile, job))
+    if limit is not None:
+        return jobs[:limit]
+    return jobs
+
+
 @transaction.atomic
 def record_credit_change(profile, delta, reason, related_job=None):
     new_balance = profile.wallet_credits + delta
