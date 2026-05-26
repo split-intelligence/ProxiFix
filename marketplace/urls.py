@@ -21,4 +21,6 @@ urlpatterns = [
     path('wallet/', views.wallet, name='wallet'),
     path('wallet/paystack/callback/', views.wallet_paystack_callback, name='wallet-paystack-callback'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('contact/', views.contact, name='contact'),
 ]

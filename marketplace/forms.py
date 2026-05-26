@@ -186,3 +186,10 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 3}),
         }
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=150)
+    email = forms.EmailField()
+    subject = forms.CharField(max_length=200)
+    message = forms.CharField(widget=forms.Textarea(attrs={'rows': 6}))

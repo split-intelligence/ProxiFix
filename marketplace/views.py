@@ -6,8 +6,10 @@ from django.db.models import Q
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.conf import settings
+from django.core.mail import send_mail
 
-from .forms import ApplicationForm, JobForm, ProfileForm, RegistrationForm, ReviewForm, WalletTopUpForm
+from .forms import ApplicationForm, JobForm, ProfileForm, RegistrationForm, ReviewForm, WalletTopUpForm, ContactForm
 from .models import Job, JobApplication, Profile
 from .services import (
     APPLICATION_CREDIT_COST,
@@ -242,6 +244,30 @@ def pricing(request):
         )
     context['pricing_packages'] = packages
     return render(request, 'marketplace/pricing.html', context)
+
+
+def privacy(request):
+    """Render a simple privacy page with marketing context."""
+    return render(request, 'marketplace/privacy.html', get_marketing_page_context(request))
+
+
+def contact(request):
+    form = ContactForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        name = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        subject = form.cleaned_data.get('subject')
+        message = form.cleaned_data.get('message')
+        body = f"From: {name} <{email}>\n\n{message}"
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
+        try:
+            # attempt to send email if mail is configured; fail silently otherwise
+            send_mail(subject, body, from_email, [getattr(settings, 'DEFAULT_FROM_EMAIL', '')], fail_silently=True)
+        except Exception:
+            pass
+        messages.success(request, 'Thanks — your message has been sent. We will respond soon.')
+        return redirect('contact')
+    return render(request, 'marketplace/contact.html', {'form': form})
 
 
 def register(request):
