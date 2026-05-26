@@ -189,7 +189,17 @@ class ReviewForm(forms.ModelForm):
 
 
 class ContactForm(forms.Form):
-    name = forms.CharField(max_length=150)
-    email = forms.EmailField()
-    subject = forms.CharField(max_length=200)
-    message = forms.CharField(widget=forms.Textarea(attrs={'rows': 6}))
+    name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your name'}),
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'you@example.com'}),
+    )
+    subject = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Subject'}),
+    )
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'How can we help?'}),
+    )
