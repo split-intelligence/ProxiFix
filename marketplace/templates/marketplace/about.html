@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load static %}
 
-{% block title %}ProxiFix | About{% endblock %}
+{% block title %}HandiGO | About{% endblock %}
 {% block body_class %}page-marketing{% endblock %}
 {% block header_class %}site-header-marketing{% endblock %}
 
@@ -9,7 +9,7 @@
 <section class="marketing-page-hero" style="background-image: linear-gradient(90deg, rgba(10, 14, 21, 0.88) 0%, rgba(10, 14, 21, 0.72) 42%, rgba(10, 14, 21, 0.86) 100%), url('{% static 'marketplace/images/black-handyman-workshop.jpg' %}');">
     <div class="container">
         <div class="marketing-page-hero-copy">
-            <span class="marketing-page-kicker">ProxiFix</span>
+            <span class="marketing-page-kicker">HandiGO</span>
             <h1>About Us</h1>
             <div class="marketing-page-breadcrumbs">
                 <a href="{% url 'home' %}">Home</a>
@@ -30,18 +30,18 @@
             </div>
         </div>
         <div class="marketing-copy-card">
-            <span class="eyebrow">About ProxiFix</span>
-            <h2>Engineering reliability through every kind of repair task.</h2>
-            <p>ProxiFix is built for people who need a cleaner way to handle repairs, maintenance, diagnostics, and technical work. That includes jobs at home, on vehicles, inside engines, around appliances, and across the everyday fix-it requests that usually live in scattered chats and phone calls.</p>
-            <p>The platform makes it easier to explain the issue, compare workers, understand trust signals, and keep the repair process moving with less confusion from first request to completed job.</p>
+            <span class="eyebrow">About HandiGO</span>
+            <h2>Built on one belief: getting the right worker for the job shouldn't be this hard.</h2>
+            <p>HandiGO is the local repair marketplace for customers who need skilled help nearby — and for tradespeople who want a platform where their work history actually counts. From plumbing and electrical to engine faults and appliance repairs, the jobs that used to live in scattered chats and word-of-mouth referrals now have a better home.</p>
+            <p>You can describe the problem clearly, browse real worker profiles, check ratings and completed jobs, and stay in the loop from first quote to final fix — without chasing anyone down.</p>
             <div class="marketing-inline-grid">
                 <div>
-                    <strong>Broader repair coverage</strong>
-                    <p>Not just property work. ProxiFix is positioned for practical repair requests across multiple technical categories.</p>
+                    <strong>More than just home repairs</strong>
+                    <p>From vehicles and engines to appliances and general maintenance — HandiGO covers the jobs that matter, not just the ones that fit a narrow category.</p>
                 </div>
                 <div>
-                    <strong>More visible decisions</strong>
-                    <p>Users can compare worker profiles, response speed, completed jobs, ratings, and level progress before hiring.</p>
+                    <strong>Know who you're hiring before you commit</strong>
+                    <p>Browse worker profiles, completed job counts, ratings, response times, and level badges — so choosing feels like a decision, not a gamble.</p>
                 </div>
             </div>
             <a class="btn btn-brand" href="{{ primary_cta_url }}">{{ primary_cta_label }}</a>
@@ -64,8 +64,8 @@
         <div class="col-lg-6">
             <div class="marketing-section-heading">
                 <span class="eyebrow">Why choose us</span>
-                <h2>The expert choice for clearer repair coordination.</h2>
-                <p>ProxiFix is designed to reduce friction in the repair process by turning scattered conversations into a more structured marketplace flow that works across repair categories.</p>
+                <h2>A platform that works for both sides of every repair.</h2>
+                <p>Good repairs start with good matches. HandiGO gives customers the visibility to choose confidently and gives workers the platform to build a reputation that earns more jobs.</p>
             </div>
             <div class="marketing-value-grid">
                 {% for value in about_values %}
@@ -94,7 +94,7 @@
         <div>
             <div class="marketing-section-heading">
                 <span class="eyebrow">Frequently asked questions</span>
-                <h2>Answers to the questions people ask before they trust a repair platform.</h2>
+                <h2>Good questions. Here are straight answers.</h2>
             </div>
             <div class="accordion marketing-accordion" id="aboutFaq">
                 {% for item in about_faqs %}
@@ -117,7 +117,7 @@
             <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Tradeswoman carrying a toolbox on site">
             <div class="marketing-support-badge">
                 <strong>Clearer</strong>
-                <span>repair requests create better worker matches and better outcomes</span>
+                <span>clear job posts attract better workers and better results</span>
             </div>
         </div>
     </div>
@@ -126,9 +126,9 @@
 <section class="container marketing-page-section pb-5">
     <div class="marketing-banner-cta">
         <div>
-            <span class="eyebrow">Start with ProxiFix</span>
-            <h2>Repairs move faster when the request, worker choice, and next step are all easier to see.</h2>
-            <p>Use ProxiFix to post the problem, compare workers, and keep the job moving with more confidence.</p>
+            <span class="eyebrow">Start with HandiGO</span>
+            <h2>The right worker is out there. Let's help you find them.</h2>
+            <p>Post your job, compare real profiles, and hire someone with a track record you can actually see.</p>
         </div>
         <div class="marketing-banner-actions">
             <a class="btn btn-brand btn-lg" href="{{ primary_cta_url }}">{{ primary_cta_label }}</a>

@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Edit Profile | ProxiFix{% endblock %}
+{% block title %}Edit Profile | HandiGO{% endblock %}
 
 {% block content %}
 <section class="container section-space">
@@ -11,7 +11,7 @@
                 <span class="eyebrow">Profile</span>
                 <h1>Keep your {{ profile.get_role_display|lower }} profile ready</h1>
                 {% if profile.role == 'worker' %}
-                    <p>Skills, response time, city, and pricing help ProxiFix match you with the right jobs.</p>
+                    <p>Skills, response time, city, and pricing help HandiGO match you with the right jobs.</p>
                 {% else %}
                     <p>Keep your contact and location details current so workers can respond to your jobs smoothly.</p>
                 {% endif %}

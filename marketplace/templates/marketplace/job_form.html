@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% if mode == 'apply' %}Apply{% else %}Post a Job{% endif %} | ProxiFix{% endblock %}
+{% block title %}{% if mode == 'apply' %}Apply{% else %}Post a Job{% endif %} | HandiGO{% endblock %}
 
 {% block content %}
 <section class="container section-space">
@@ -15,7 +15,7 @@
                 {% else %}
                     <span class="eyebrow">Customer flow</span>
                     <h1>Create a job request</h1>
-                    <p>Posting costs 2 FixPoints. Add the city and optional address while ProxiFix captures your current location in the background.</p>
+                    <p>Posting costs 2 FixPoints. Add the city and optional address while HandiGO captures your current location in the background.</p>
                 {% endif %}
                 <form method="post" novalidate>
                     {% csrf_token %}

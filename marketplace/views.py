@@ -218,16 +218,16 @@ def pricing(request):
     context = get_marketing_page_context(request)
     package_copy = {
         'starter': {
-            'summary': 'A simple way to get started with posting or applying on the platform.',
-            'features': ['50 FixPoints included', 'Good for first-time use', 'Fast Paystack top-up'],
+            'summary': 'The right place to start — enough FixPoints to post your first job or send your first proposal.',
+            'features': ['50 FixPoints included', 'Perfect for first-time users', 'Fast top-up via Paystack'],
         },
         'value': {
-            'summary': 'The strongest balance for steady activity across jobs, bids, and visibility.',
-            'features': ['110 FixPoints included', 'Best everyday value', 'Great for repeat platform use'],
+            'summary': 'The best everyday balance — enough headroom for regular posting, applying, and staying visible.',
+            'features': ['110 FixPoints included', 'Best value for regular use', 'Ideal for active customers and workers'],
         },
         'pro': {
-            'summary': 'Built for heavier usage when you need more room for consistent marketplace activity.',
-            'features': ['250 FixPoints included', 'Higher-volume usage', 'Better headroom for frequent actions'],
+            'summary': 'For serious marketplace activity — post, bid, and boost without running short.',
+            'features': ['250 FixPoints included', 'Built for high-volume use', 'Best rate per FixPoint'],
         },
     }
     packages = []

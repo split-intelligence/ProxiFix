@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ job.title }} | ProxiFix{% endblock %}
+{% block title %}{{ job.title }} | HandiGO{% endblock %}
 
 {% block content %}
 <section class="container section-space">
@@ -139,7 +139,7 @@
                             <span>{{ recommendation.score }}%</span>
                         </div>
                     {% empty %}
-                        <p class="text-muted mb-0">Recommended workers will appear here once they join ProxiFix.</p>
+                        <p class="text-muted mb-0">Recommended workers will appear here once they join HandiGO.</p>
                     {% endfor %}
                 </div>
             {% endif %}

@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load static %}
 
-{% block title %}ProxiFix | Pricing{% endblock %}
+{% block title %}HandiGO | Pricing{% endblock %}
 {% block body_class %}page-marketing{% endblock %}
 {% block header_class %}site-header-marketing{% endblock %}
 
@@ -9,7 +9,7 @@
 <section class="marketing-page-hero" style="background-image: linear-gradient(90deg, rgba(10, 14, 21, 0.88) 0%, rgba(10, 14, 21, 0.72) 42%, rgba(10, 14, 21, 0.86) 100%), url('{% static 'marketplace/images/black-handyman-hero.jpg' %}');">
     <div class="container">
         <div class="marketing-page-hero-copy">
-            <span class="marketing-page-kicker">ProxiFix</span>
+            <span class="marketing-page-kicker">HandiGO</span>
             <h1>Pricing</h1>
             <div class="marketing-page-breadcrumbs">
                 <a href="{% url 'home' %}">Home</a>
@@ -23,8 +23,8 @@
 <section class="container marketing-page-section">
     <div class="marketing-section-heading marketing-section-heading-center">
         <span class="eyebrow">FixPoints pricing</span>
-        <h2>Structured pricing for the platform actions that keep repairs moving.</h2>
-        <p>FixPoints handle job posting, applications, and visibility boosts. Actual repair pricing is still agreed directly between customer and worker based on the real job.</p>
+        <h2>Simple, transparent pricing. No surprises — just FixPoints.</h2>
+        <p>FixPoints cover your platform activity — posting jobs, sending proposals, and boosting visibility. What workers charge for the actual repair is a separate conversation between you and them.</p>
     </div>
     <div class="marketing-price-grid">
         {% for package in pricing_packages %}
@@ -50,8 +50,8 @@
 <section class="container marketing-page-section">
     <div class="marketing-section-heading">
         <span class="eyebrow">How pricing works</span>
-        <h2>FixPoints cover platform access. Repair quotes stay tied to the actual work.</h2>
-        <p>That split keeps the marketplace practical. You pay for platform actions transparently, while workers quote based on what the job really requires.</p>
+        <h2>You pay for platform access. Workers quote for the actual work.</h2>
+        <p>That split keeps things honest. Platform fees are fixed and visible upfront — repair quotes are set by workers based on what the job actually needs.</p>
     </div>
     <div class="marketing-guidance-grid">
         {% for item in pricing_guidance %}
@@ -68,8 +68,8 @@
         <div class="col-lg-7">
             <div class="marketing-section-heading">
                 <span class="eyebrow">Trust and proof</span>
-                <h2>Clearer platform pricing helps people make better repair decisions.</h2>
-                <p>These proof points explain why ProxiFix pricing is intentionally transparent about platform actions while leaving room for real-world repair quoting.</p>
+                <h2>Pricing you can see clearly before you commit to anything.</h2>
+                <p>HandiGO keeps platform fees separate from repair costs on purpose. You should know exactly what you're spending on the marketplace before any worker quotes you a price.</p>
             </div>
             <div class="marketing-proof-grid">
                 {% for proof in proof_cards %}
@@ -97,23 +97,23 @@
             <p>Once you understand how FixPoints work, the next step is simple: browse jobs, compare workers, or top up your wallet and move the repair forward.</p>
             <div class="marketing-action-points">
                 <div>
-                    <strong>Platform actions</strong>
-                    <span>Use FixPoints for posting, applying, and boosting visibility.</span>
+                    <strong>Post or apply</strong>
+                    <span>FixPoints cover job posts and worker proposals — predictable costs, no surprises.</span>
                 </div>
                 <div>
                     <strong>Real-world quotes</strong>
-                    <span>Workers price the actual repair based on the scope, urgency, and materials involved.</span>
+                    <span>Workers set their own repair prices based on the scope, materials, and urgency of the actual job.</span>
                 </div>
                 <div>
-                    <strong>Better comparison</strong>
-                    <span>Review worker profiles, trust signals, and proposal context before making a choice.</span>
+                    <strong>Review before you hire</strong>
+                    <span>Check worker profiles, ratings, and completed jobs before committing to anyone.</span>
                 </div>
             </div>
         </div>
         <div class="marketing-action-card">
-            <span class="marketing-action-kicker">CTA only</span>
-            <h3>Choose what you want to do next.</h3>
-            <p>No extra inquiry form needed here. Go straight to the relevant part of the platform.</p>
+            <span class="marketing-action-kicker">Quick links</span>
+            <h3>Where do you want to go from here?</h3>
+            <p>Jump straight to the part of the platform that makes sense for where you are right now.</p>
             <div class="marketing-action-button-stack">
                 {% for action in cta_panel_actions %}
                     <a class="btn {{ action.style }}" href="{{ action.url }}">{{ action.label }}</a>
@@ -128,7 +128,7 @@
         <div>
             <div class="marketing-section-heading">
                 <span class="eyebrow">Pricing FAQ</span>
-                <h2>Answers to the most important pricing questions.</h2>
+                <h2>Pricing questions, answered plainly.</h2>
             </div>
             <div class="accordion marketing-accordion" id="pricingFaq">
                 {% for item in pricing_faqs %}
@@ -161,8 +161,8 @@
     <div class="marketing-banner-cta">
         <div>
             <span class="eyebrow">Ready to move</span>
-            <h2>Use transparent platform pricing to start the repair process with more confidence.</h2>
-            <p>Choose a FixPoints package, post a job, compare workers, and let the actual repair pricing follow the reality of the work.</p>
+            <h2>Pick a package and get the job started.</h2>
+            <p>Top up your FixPoints wallet, post your first job, and connect with skilled workers nearby.</p>
         </div>
         <div class="marketing-banner-actions">
             <a class="btn btn-brand btn-lg" href="{{ pricing_cta_url }}">{{ pricing_cta_label }}</a>

@@ -1,7 +1,7 @@
 {% extends 'marketplace/base.html' %}
 {% load static %}
 
-{% block title %}ProxiFix | Home{% endblock %}
+{% block title %}HandiGO | Home{% endblock %}
 {% block body_class %}page-home{% endblock %}
 {% block header_class %}site-header-home{% endblock %}
 
@@ -19,14 +19,14 @@
                 </div>
             </div>
             <div class="home-reference-copy">
-                <span class="home-kicker">Trusted repairs. Local workers. Clearer follow-through.</span>
-                <h1>Precision repairs. Trusted local workers. From homes to cars, engines, and more.</h1>
-                <p>ProxiFix helps people post repair jobs, compare skilled workers, and move from problem to completion with better visibility, faster replies, and flexible FixPoints across property, vehicle, engine, and general repair work.</p>
+                <span class="home-kicker">For customers with jobs to post. For skilled workers ready to grow.</span>
+                <h1>Find skilled help near you. Get found by customers who need you.</h1>
+                <p>HandiGO is the local repair marketplace where customers post jobs, compare real worker profiles, and track progress from first quote to final fix — and where skilled tradespeople build a reputation that speaks for itself. Whether you have a leaking pipe or a solid skill set, this is where things get done.</p>
                 <div class="home-reference-actions">
                     {% if request.user.is_authenticated %}
                         <a class="btn btn-brand btn-lg" href="{% url 'job-create' %}">Post a job</a>
                     {% else %}
-                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Start with ProxiFix</a>
+                        <a class="btn btn-brand btn-lg" href="{% url 'register' %}">Start with HandiGO</a>
                     {% endif %}
                     <a class="btn btn-outline-light btn-lg" href="{% url 'worker-directory' %}">Find workers</a>
                 </div>
@@ -83,16 +83,16 @@
         </div>
         <div class="home-split-copy">
             <span class="eyebrow">About us</span>
-            <h2>Engineering reliability into everyday repairs of every kind.</h2>
-            <p>From leaking taps and electrical callouts to vehicle faults, engine issues, and practical maintenance jobs, ProxiFix gives people a cleaner way to find help close by. The platform makes it easier to explain the problem, review workers, compare responses, and keep momentum once work begins.</p>
+            <h2>Built on one belief: finding a good tradesperson shouldn't be this hard.</h2>
+            <p>HandiGO gives customers a clearer way to explain the problem, browse real worker profiles nearby, and stay in the loop once work begins. For workers, it's a platform where consistency pays — where showing up, doing good work, and building a track record actually means something.</p>
             <div class="home-info-grid">
                 <div>
                     <strong>Location-aware matching</strong>
-                    <p>Profiles and job listings can use city and coordinate data to keep discovery local and practical for both on-site visits and mobile repair work.</p>
+                    <p>Job posts and worker profiles use location data to keep everything local — ideal for on-site work and mobile specialists who travel to jobs.</p>
                 </div>
                 <div>
-                    <strong>Transparent worker growth</strong>
-                    <p>FixPoints, XP, and level badges make worker activity and consistency easier to understand at a glance across many repair specialties.</p>
+                    <strong>Visible worker growth</strong>
+                    <p>FixPoints, XP, and level badges give workers a public track record — and help customers quickly spot people with a real history of getting jobs done.</p>
                 </div>
             </div>
             <a class="btn btn-brand" href="{% url 'job-list' %}">Browse open jobs</a>
@@ -104,30 +104,30 @@
     <div class="row g-4 align-items-stretch">
         <div class="col-lg-6">
             <div class="home-section-heading">
-                <span class="eyebrow">Why ProxiFix</span>
-                <h2>The expert choice for smoother repairs across property, vehicles, and equipment.</h2>
-                <p>A marketplace is only useful when it reduces stress. ProxiFix is designed to help customers move quickly, compare workers with more confidence, and keep service activity visible from first request to completion whether the issue is at home, in a car, or inside an engine.</p>
+                <span class="eyebrow">Why HandiGO</span>
+                <h2>Built around the way repairs actually work.</h2>
+                <p>A marketplace is only worth your time if it makes things easier. HandiGO is designed to help customers post with clarity, compare workers without guesswork, and stay informed from first request to final fix — whether the job is at home, in a car, or inside an engine.</p>
             </div>
             <div class="home-feature-grid">
                 <article class="home-feature-card">
                     <span class="home-feature-index">01</span>
                     <h3>Structured job posting</h3>
-                    <p>Customers can describe scope, urgency, location, and budget without messy back-and-forth.</p>
+                    <p>Describe the scope, location, urgency, and budget clearly — without messy back-and-forth before work even starts.</p>
                 </article>
                 <article class="home-feature-card">
                     <span class="home-feature-index">02</span>
                     <h3>Streamlined worker discovery</h3>
-                    <p>Browse profiles, skill tags, response times, and completed work before making a choice.</p>
+                    <p>Browse profiles, skill tags, response times, and completed work before you make a decision or spend a FixPoint.</p>
                 </article>
                 <article class="home-feature-card">
                     <span class="home-feature-index">03</span>
                     <h3>Visible trust signals</h3>
-                    <p>Ratings, XP, completed jobs, and badges help strong workers stand out naturally.</p>
+                    <p>Ratings, XP, completed jobs, and badges let strong workers stand out — so customers feel confident before they hire.</p>
                 </article>
                 <article class="home-feature-card">
                     <span class="home-feature-index">04</span>
-                    <h3>Practical platform economics</h3>
-                    <p>FixPoints keep posting, applying, and boosting simple without overcomplicating the flow.</p>
+                    <h3>Simple platform economics</h3>
+                    <p>FixPoints keep posting and applying predictable — no complicated pricing, no hidden costs, no surprises.</p>
                 </article>
             </div>
         </div>
@@ -146,8 +146,8 @@
 <section class="container home-section">
     <div class="home-section-heading home-section-heading-wide">
         <span class="eyebrow">Our services</span>
-        <h2>Urgent fixes, ongoing maintenance, and specialist repair work in one place.</h2>
-        <p>These are some of the repair and maintenance tracks people can explore on ProxiFix, with room for broader requests including vehicle, engine, and general technical work.</p>
+        <h2>From a leaking tap to a faulty engine — one place to find the right hands.</h2>
+        <p>These are the repair and maintenance tracks where HandiGO connects customers with skilled local workers. Have a job that doesn't fit neatly into one box? Post it anyway — broader requests are welcome.</p>
     </div>
     <div class="home-service-grid">
         {% for value, label in open_jobs.model.CATEGORY_CHOICES|slice:":6" %}
@@ -186,8 +186,8 @@
         <div class="col-lg-7">
             <div class="home-section-heading">
                 <span class="eyebrow">Featured workers</span>
-                <h2>Evidence of technical quality starts with the people doing the work.</h2>
-                <p>ProxiFix surfaces workers with visible activity, skill tags, response expectations, and growth signals so hiring feels less like guesswork across repair categories.</p>
+                <h2>Workers who show up, do the work, and let their record speak for itself.</h2>
+                <p>HandiGO surfaces workers with visible activity, skill tags, response times, and growth signals — so hiring feels less like a gamble and more like an informed choice.</p>
             </div>
             <div class="home-worker-proof-grid">
                 {% for worker in featured_workers|slice:":4" %}
@@ -208,8 +208,8 @@
                     </article>
                 {% empty %}
                     <article class="home-proof-card home-proof-card-empty">
-                        <h3>Worker profiles are on the way.</h3>
-                        <p>As workers join ProxiFix, this section will fill with real local profiles, skill coverage, and visible platform activity.</p>
+                        <h3>Worker profiles coming soon.</h3>
+                        <p>As tradespeople join HandiGO, this section will fill with real local profiles, completed jobs, and skill coverage across repair categories.</p>
                     </article>
                 {% endfor %}
             </div>
@@ -218,8 +218,8 @@
             <div class="home-proof-visual">
                 <img src="{% static 'marketplace/images/black-handyman-hero.jpg' %}" alt="Worker holding a power drill and safety gear">
                 <div class="home-proof-callout">
-                    <strong>Better visibility</strong>
-                    <p>Profiles, ratings, XP, and reply speed all support faster decisions.</p>
+                    <strong>Real track records</strong>
+                    <p>Ratings, XP, response speed, and completed jobs — all visible before you hire.</p>
                 </div>
             </div>
         </div>
@@ -229,9 +229,9 @@
 <section class="container home-section">
     <div class="home-cta-panel">
         <div class="home-cta-copy">
-            <span class="eyebrow">Request service</span>
-            <h2>Discuss any repair need with less friction.</h2>
-            <p>Whether you are handling one urgent issue or lining up multiple repair needs across property, vehicles, engines, or equipment, ProxiFix helps you create a clear job post, reach the right workers, and keep the process moving.</p>
+            <span class="eyebrow">Get started</span>
+            <h2>One job post from the right person for the job.</h2>
+            <p>Whether you're sorting one urgent repair or lining up several jobs across property, vehicles, or equipment — HandiGO helps you reach skilled workers fast. Post clearly, compare easily, and choose someone with a real track record behind them.</p>
             <div class="home-cta-points">
                 <span>Use FixPoints to post or apply</span>
                 <span>Review worker profiles before hiring</span>
@@ -240,7 +240,7 @@
         </div>
         <div class="home-cta-card">
             <span class="home-cta-card-kicker">Fast start</span>
-            <h3>Set your next repair in motion.</h3>
+            <h3>Ready to get things moving?</h3>
             <div class="home-cta-card-list">
                 <div>
                     <strong>1.</strong>
@@ -248,11 +248,11 @@
                 </div>
                 <div>
                     <strong>2.</strong>
-                    <span>Post the job or browse workers.</span>
+                    <span>Post a job or browse available workers.</span>
                 </div>
                 <div>
                     <strong>3.</strong>
-                    <span>Hire with better context and visibility.</span>
+                    <span>Hire knowing exactly who you're choosing.</span>
                 </div>
             </div>
             <div class="home-cta-actions">
@@ -272,7 +272,7 @@
         <div class="col-lg-6">
             <div class="home-section-heading">
                 <span class="eyebrow">Frequently asked questions</span>
-                <h2>Answers to the core service questions people ask first.</h2>
+                <h2>The questions most people ask before they start.</h2>
             </div>
             <div class="accordion home-faq-accordion" id="homeFaq">
                 <div class="accordion-item">
@@ -283,7 +283,7 @@
                     </h3>
                     <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#homeFaq">
                         <div class="accordion-body">
-                            Your request appears in the marketplace so workers can review it and send proposals. You can then compare profiles, skills, ratings, and response expectations before choosing who to work with.
+                            Your request goes live in the marketplace so nearby workers can review it and send proposals. Compare profiles, skills, ratings, and response expectations — then choose who you want to work with.
                         </div>
                     </div>
                 </div>
@@ -295,7 +295,7 @@
                     </h3>
                     <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
                         <div class="accordion-body">
-                            Customers use FixPoints to post jobs, while workers use them to send applications. The wallet system keeps platform actions simple and predictable.
+                            FixPoints are the platform's simple action currency. Customers use them to post jobs; workers use them to send proposals. It keeps everything predictable and easy to follow.
                         </div>
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                     </h3>
                     <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
                         <div class="accordion-body">
-                            Yes. ProxiFix is built around comparison. You can review worker bios, skills, completed jobs, response time, badges, and ratings before making a decision.
+                            Yes — that's the whole point. Review bios, skills, completed jobs, response times, badges, and ratings before making any commitment.
                         </div>
                     </div>
                 </div>
@@ -319,7 +319,7 @@
                     </h3>
                     <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#homeFaq">
                         <div class="accordion-body">
-                            No. The platform fits quick repairs, maintenance tasks, installations, and larger technical work across homes, vehicles, engines, appliances, and everyday fix-it problems people actually need solved.
+                            Not at all. HandiGO fits quick repairs, maintenance tasks, diagnostics, installations, and specialist work across homes, vehicles, engines, appliances, and everyday fix-it jobs of all sizes.
                         </div>
                     </div>
                 </div>
@@ -330,7 +330,7 @@
                 <img src="{% static 'marketplace/images/black-toolbox-woman.jpg' %}" alt="Tradeswoman carrying a toolbox outdoors">
                 <div class="home-faq-badge">
                     <strong>Clearer</strong>
-                    <span>better repair decisions start with clearer information</span>
+                    <span>better hiring starts with better information</span>
                 </div>
             </div>
         </div>
