@@ -196,6 +196,20 @@ class JobApplication(TimeStampedModel):
         return f'{self.worker.display_name} -> {self.job.title}'
 
 
+class PushSubscription(TimeStampedModel):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='push_subscriptions')
+    endpoint = models.URLField(max_length=500)
+    p256dh = models.CharField(max_length=255)
+    auth = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ('profile', 'endpoint')
+        ordering = ('-updated_at',)
+
+    def __str__(self):
+        return f'PushSubscription for {self.profile.display_name}'
+
+
 class Review(TimeStampedModel):
     job = models.OneToOneField(Job, on_delete=models.CASCADE, related_name='review')
     reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='authored_reviews')

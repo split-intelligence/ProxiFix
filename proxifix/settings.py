@@ -132,6 +132,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY', default='')
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY', default='')
 
+# Web Push Notifications (for ProxiFix bid & acceptance alerts)
+# Generate VAPID keys: python -m webpush --generate-keys
+PUSH_VAPID_PUBLIC_KEY = config('PUSH_VAPID_PUBLIC_KEY', default='')
+PUSH_VAPID_PRIVATE_KEY = config('PUSH_VAPID_PRIVATE_KEY', default='')
+PUSH_VAPID_CLAIMS_SUBJECT = config('PUSH_VAPID_CLAIMS_SUBJECT', default='mailto:no-reply@proxifix.com')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

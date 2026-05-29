@@ -43,8 +43,11 @@
                         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                             <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'pricing' %}">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'job-list' %}">Jobs</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'worker-directory' %}">Workers</a></li>
+                            {% if request.user.profile.role == 'customer' %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'worker-directory' %}">Workers</a></li>
+                            {% elif request.user.profile.role == 'worker' %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'job-list' %}">Jobs</a></li>
+                            {% endif %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a></li>
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
@@ -189,11 +192,70 @@
         })();
     </script>
     <script>
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        async function registerPushSubscription(registration) {
+            if (!('PushManager' in window) || !('Notification' in window)) {
+                return;
+            }
+
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                return;
+            }
+
+            const response = await fetch('{% url "push-public-key" %}');
+            const data = await response.json();
+            const publicKey = data.publicKey;
+            if (!publicKey) {
+                return;
+            }
+
+            let subscription = await registration.pushManager.getSubscription();
+            if (!subscription) {
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(publicKey),
+                });
+            }
+
+            await fetch('{% url "push-subscribe" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify(subscription),
+            });
+        }
+
         if ('serviceWorker' in navigator) {
+            const userIsAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
             window.addEventListener('load', function () {
                 navigator.serviceWorker.register('/sw.js')
                     .then(function (registration) {
                         console.log('Service Worker registered with scope:', registration.scope);
+                        if (userIsAuthenticated) {
+                            registerPushSubscription(registration).catch(function (error) {
+                                console.warn('Push subscription failed:', error);
+                            });
+                        }
                     })
                     .catch(function (error) {
                         console.warn('Service Worker registration failed:', error);

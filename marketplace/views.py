@@ -3,14 +3,16 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Q
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.conf import settings
+import json
 from django.core.mail import send_mail
+from django.views.decorators.http import require_POST
 
 from .forms import ApplicationForm, JobForm, ProfileForm, RegistrationForm, ReviewForm, WalletTopUpForm, ContactForm
-from .models import Job, JobApplication, Profile
+from .models import Job, JobApplication, Profile, PushSubscription
 from .services import (
     APPLICATION_CREDIT_COST,
     BOOST_VISIBILITY_CREDIT_COST,
@@ -26,6 +28,7 @@ from .services import (
     sort_jobs_for_profile,
     sort_workers_for_profile,
     verify_paystack_topup,
+    send_push_notification_to_profile,
 )
 
 
@@ -479,6 +482,39 @@ def job_detail(request, pk):
 
 
 @login_required
+def push_public_key(request):
+    return JsonResponse({'publicKey': settings.PUSH_VAPID_PUBLIC_KEY or ''})
+
+
+@login_required
+@require_POST
+def push_subscribe(request):
+    if not settings.PUSH_VAPID_PUBLIC_KEY:
+        return JsonResponse({'error': 'Push notifications are not configured.'}, status=503)
+
+    try:
+        payload = json.loads(request.body.decode('utf-8'))
+    except ValueError:
+        return JsonResponse({'error': 'Invalid subscription payload.'}, status=400)
+
+    endpoint = payload.get('endpoint')
+    keys = payload.get('keys') or {}
+    if not endpoint or not keys.get('p256dh') or not keys.get('auth'):
+        return JsonResponse({'error': 'Incomplete subscription data.'}, status=400)
+
+    PushSubscription.objects.update_or_create(
+        profile=get_profile(request.user),
+        endpoint=endpoint,
+        defaults={
+            'p256dh': keys['p256dh'],
+            'auth': keys['auth'],
+        },
+    )
+
+    return JsonResponse({'success': True})
+
+
+@login_required
 def apply_to_job(request, pk):
     profile = ensure_role(request, Profile.WORKER)
     if not profile:
@@ -516,6 +552,14 @@ def apply_to_job(request, pk):
             form.add_error(None, str(exc))
         else:
             messages.success(request, 'Proposal sent. Your application is now in the queue.')
+            send_push_notification_to_profile(
+                job.customer,
+                {
+                    'title': 'New proposal received',
+                    'body': f'{profile.display_name} submitted a bid on your job: {job.title}',
+                    'url': job.get_absolute_url(),
+                },
+            )
             return redirect(job)
 
     return render(request, 'marketplace/job_form.html', {'form': form, 'mode': 'apply', 'job': job})
@@ -539,6 +583,14 @@ def accept_application(request, job_pk, application_pk):
         application.save(update_fields=['status', 'updated_at'])
         award_xp(application.worker, 10, 'Customer selected your proposal', related_job=job)
 
+    send_push_notification_to_profile(
+        application.worker,
+        {
+            'title': 'Bid accepted',
+            'body': f'Your bid for {job.title} has been accepted.',
+            'url': job.get_absolute_url(),
+        },
+    )
     messages.success(request, f'{application.worker.display_name} is now assigned to this job. Contact details are now visible to both sides.')
     return redirect(job)
 

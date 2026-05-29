@@ -7,6 +7,11 @@ from django.conf import settings
 from django.db import transaction
 
 from .models import CreditTransaction, Job, Profile, WalletTopUp, XPEvent
+try:
+    from pywebpush import WebPushException, webpush
+except ImportError:  # pragma: no cover
+    webpush = None
+    WebPushException = Exception
 
 DEFAULT_SIGNUP_CREDITS = 50
 JOB_POST_CREDIT_COST = 2
@@ -335,3 +340,47 @@ def verify_paystack_topup(reference):
         topup.save(update_fields=['fulfilled', 'updated_at'])
 
     return topup
+
+
+def _vapid_claims():
+    return {
+        'sub': getattr(settings, 'PUSH_VAPID_CLAIMS_SUBJECT', 'mailto:no-reply@handigo.com'),
+    }
+
+
+def _subscription_info(subscription):
+    return {
+        'endpoint': subscription.endpoint,
+        'keys': {
+            'p256dh': subscription.p256dh,
+            'auth': subscription.auth,
+        },
+    }
+
+
+def send_web_push(subscription, payload):
+    if not webpush or not settings.PUSH_VAPID_PRIVATE_KEY:
+        return False
+    try:
+        webpush(
+            subscription_info=_subscription_info(subscription),
+            data=json.dumps(payload),
+            vapid_private_key=settings.PUSH_VAPID_PRIVATE_KEY,
+            vapid_claims=_vapid_claims(),
+        )
+        return True
+    except WebPushException as exc:
+        response = getattr(exc, 'response', None)
+        if response and getattr(response, 'status_code', None) in (404, 410):
+            subscription.delete()
+        return False
+
+
+def send_push_notification_to_profile(profile, payload):
+    if not settings.PUSH_VAPID_PUBLIC_KEY or not settings.PUSH_VAPID_PRIVATE_KEY:
+        return False
+    success = False
+    for subscription in profile.push_subscriptions.all():
+        if send_web_push(subscription, payload):
+            success = True
+    return success

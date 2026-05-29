@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CreditTransaction, Job, JobApplication, Profile, Review, WalletTopUp, XPEvent
+from .models import CreditTransaction, Job, JobApplication, Profile, Review, WalletTopUp, XPEvent, PushSubscription
 
 
 @admin.register(Profile)
@@ -49,3 +49,10 @@ class WalletTopUpAdmin(admin.ModelAdmin):
     list_display = ('profile', 'package_name', 'naira_amount', 'credits', 'status', 'fulfilled', 'created_at')
     list_filter = ('status', 'fulfilled', 'created_at')
     search_fields = ('profile__user__username', 'reference', 'package_name')
+
+
+@admin.register(PushSubscription)
+class PushSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('profile', 'endpoint', 'updated_at')
+    search_fields = ('profile__user__username',)
+    readonly_fields = ('endpoint', 'p256dh', 'auth', 'created_at', 'updated_at')
