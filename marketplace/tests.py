@@ -1,10 +1,11 @@
+import json
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Job, JobApplication, Profile, WalletTopUp
+from .models import Job, JobApplication, Profile, PushSubscription, WalletTopUp
 from .services import complete_job, get_level_metadata, recommend_workers
 
 
@@ -395,3 +396,60 @@ class MarketplaceSmokeTests(TestCase):
 
         self.assertContains(response, 'Buy FixPoints')
         self.assertContains(response, f'href="{reverse("wallet")}"')
+
+    def test_push_public_key_returns_browser_safe_key_from_pem_body(self):
+        user = User.objects.create_user(username='push-user', password='pass12345')
+        self.client.login(username='push-user', password='pass12345')
+        pem_body = (
+            'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErABzNZZD0yKlH6v8P57kZ4+3zZ6R'
+            'pWJG++28u0dMRpUkyBnkWPkHw+Q0GLbj/VwC19OOdv2oHEfsFl1kXr3RqQ=='
+        )
+
+        with self.settings(PUSH_VAPID_PUBLIC_KEY=pem_body):
+            response = self.client.get(reverse('push-public-key'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json()['publicKey'],
+            'BKwAczWWQ9MipR-r_D-e5GePt82ekaViRvvtvLtHTEaVJMgZ5Fj5B8PkNBi24_1cAtfTjnb9qBxH7BZdZF690ak',
+        )
+
+    def test_push_public_key_keeps_existing_browser_safe_key(self):
+        user = User.objects.create_user(username='push-raw-user', password='pass12345')
+        self.client.login(username='push-raw-user', password='pass12345')
+        browser_safe_key = 'BKwAczWWQ9MipR-r_D-e5GePt82ekaViRvvtvLtHTEaVJMgZ5Fj5B8PkNBi24_1cAtfTjnb9qBxH7BZdZF690ak'
+
+        with self.settings(PUSH_VAPID_PUBLIC_KEY=browser_safe_key):
+            response = self.client.get(reverse('push-public-key'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['publicKey'], browser_safe_key)
+
+    def test_push_subscribe_stores_browser_subscription(self):
+        user = User.objects.create_user(username='push-sub-user', password='pass12345')
+        self.client.login(username='push-sub-user', password='pass12345')
+
+        with self.settings(PUSH_VAPID_PUBLIC_KEY='configured'):
+            response = self.client.post(
+                reverse('push-subscribe'),
+                data=json.dumps(
+                    {
+                        'endpoint': 'https://push.example/subscription/123',
+                        'keys': {
+                            'p256dh': 'client-public-key',
+                            'auth': 'client-auth-secret',
+                        },
+                    }
+                ),
+                content_type='application/json',
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            PushSubscription.objects.filter(
+                profile=user.profile,
+                endpoint='https://push.example/subscription/123',
+                p256dh='client-public-key',
+                auth='client-auth-secret',
+            ).exists()
+        )

@@ -1,0 +1,51 @@
+Collecting pywebpush
+  Downloading pywebpush-2.3.0-py3-none-any.whl.metadata (9.7 kB)
+Collecting aiohttp (from pywebpush)
+  Downloading aiohttp-3.13.5-cp311-cp311-win_amd64.whl.metadata (8.4 kB)
+Collecting cryptography>=2.6.1 (from pywebpush)
+  Downloading cryptography-48.0.0-cp311-abi3-win_amd64.whl.metadata (4.3 kB)
+Collecting http-ece>=1.1.0 (from pywebpush)
+  Downloading http_ece-1.2.1.tar.gz (8.8 kB)
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting requests>=2.21.0 (from pywebpush)
+  Using cached requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting py-vapid>=1.7.0 (from pywebpush)
+  Downloading py_vapid-1.9.4-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting cffi>=2.0.0 (from cryptography>=2.6.1->pywebpush)
+  Using cached cffi-2.0.0-cp311-cp311-win_amd64.whl.metadata (2.6 kB)
+Collecting charset_normalizer<4,>=2 (from requests>=2.21.0->pywebpush)
+  Using cached charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl.metadata (41 kB)
+Collecting idna<4,>=2.5 (from requests>=2.21.0->pywebpush)
+  Downloading idna-3.16-py3-none-any.whl.metadata (6.4 kB)
+Collecting urllib3<3,>=1.26 (from requests>=2.21.0->pywebpush)
+  Using cached urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting certifi>=2023.5.7 (from requests>=2.21.0->pywebpush)
+  Downloading certifi-2026.5.20-py3-none-any.whl.metadata (2.5 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp->pywebpush)
+  Downloading aiohappyeyeballs-2.6.2-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp->pywebpush)
+  Using cached aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting attrs>=17.3.0 (from aiohttp->pywebpush)
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp->pywebpush)
+  Using cached frozenlist-1.8.0-cp311-cp311-win_amd64.whl.metadata (21 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp->pywebpush)
+  Downloading multidict-6.7.1-cp311-cp311-win_amd64.whl.metadata (5.5 kB)
+Collecting propcache>=0.2.0 (from aiohttp->pywebpush)
+  Downloading propcache-0.5.2-cp311-cp311-win_amd64.whl.metadata (17 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp->pywebpush)
+  Downloading yarl-1.24.2-cp311-cp311-win_amd64.whl.metadata (97 kB)
+     --------------------------------------- 97.2/97.2 kB 16.9 kB/s eta 0:00:00
+Collecting typing-extensions>=4.2 (from aiosignal>=1.4.0->aiohttp->pywebpush)
+  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography>=2.6.1->pywebpush)
+  Using cached pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+Downloading pywebpush-2.3.0-py3-none-any.whl (22 kB)
+Downloading cryptography-48.0.0-cp311-abi3-win_amd64.whl (3.8 MB)
+   --------------------------------------   3.6/3.8 MB 18.3 kB/s eta 0:00:10

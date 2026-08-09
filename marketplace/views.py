@@ -25,6 +25,7 @@ from .services import (
     initialize_paystack_topup,
     record_credit_change,
     recommend_workers,
+    browser_vapid_public_key,
     sort_jobs_for_profile,
     sort_workers_for_profile,
     verify_paystack_topup,
@@ -483,7 +484,7 @@ def job_detail(request, pk):
 
 @login_required
 def push_public_key(request):
-    return JsonResponse({'publicKey': settings.PUSH_VAPID_PUBLIC_KEY or ''})
+    return JsonResponse({'publicKey': browser_vapid_public_key()})
 
 
 @login_required

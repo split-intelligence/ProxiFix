@@ -1,3 +1,4 @@
+import base64
 import json
 import secrets
 from math import asin, cos, radians, sin, sqrt
@@ -7,6 +8,11 @@ from django.conf import settings
 from django.db import transaction
 
 from .models import CreditTransaction, Job, Profile, WalletTopUp, XPEvent
+try:
+    from cryptography.hazmat.primitives import serialization
+except ImportError:  # pragma: no cover
+    serialization = None
+
 try:
     from pywebpush import WebPushException, webpush
 except ImportError:  # pragma: no cover
@@ -346,6 +352,52 @@ def _vapid_claims():
     return {
         'sub': getattr(settings, 'PUSH_VAPID_CLAIMS_SUBJECT', 'mailto:no-reply@handigo.com'),
     }
+
+
+def _base64url_encode(value):
+    return base64.urlsafe_b64encode(value).rstrip(b'=').decode('ascii')
+
+
+def _base64url_decode(value):
+    normalized = value.replace('-', '+').replace('_', '/')
+    padded = normalized + ('=' * ((4 - len(normalized) % 4) % 4))
+    return base64.b64decode(padded)
+
+
+def _public_key_material(public_key):
+    public_key = (public_key or '').strip()
+    if 'BEGIN PUBLIC KEY' not in public_key:
+        return public_key
+    return ''.join(
+        line.strip()
+        for line in public_key.splitlines()
+        if line.strip() and not line.startswith('-----')
+    )
+
+
+def browser_vapid_public_key(public_key=None):
+    key_material = _public_key_material(public_key if public_key is not None else settings.PUSH_VAPID_PUBLIC_KEY)
+    if not key_material:
+        return ''
+    try:
+        decoded = _base64url_decode(key_material)
+    except (TypeError, ValueError):
+        return key_material
+
+    if len(decoded) == 65 and decoded[0] == 4:
+        return _base64url_encode(decoded)
+
+    if not serialization:
+        return key_material
+
+    try:
+        pem = f'-----BEGIN PUBLIC KEY-----\n{key_material}\n-----END PUBLIC KEY-----\n'.encode('ascii')
+        public_numbers = serialization.load_pem_public_key(pem).public_numbers()
+    except (TypeError, ValueError):
+        return key_material
+
+    raw_key = bytes([4]) + public_numbers.x.to_bytes(32, 'big') + public_numbers.y.to_bytes(32, 'big')
+    return _base64url_encode(raw_key)
 
 
 def _subscription_info(subscription):
